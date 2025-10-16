@@ -22,7 +22,7 @@ This repository contains an extensible, production-grade platform that unifies k
 
 
 ![Architecture Diagram](./Architecture.png)
-
+![view the Architecture.md](./Architecture.md)
 
 
 The system is designed with a modular, multi-layer architecture that separates concerns from data ingestion to user interaction.
