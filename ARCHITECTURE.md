@@ -28,6 +28,8 @@ The **Lyzr Challenge RAG System** is a sophisticated **Retrieval-Augmented Gener
 
 # 🏗️ Architecture
 
+![Architecture Diagram](./Architecture.png)
+
 The system is designed with a modular, multi-layer architecture that separates concerns from data ingestion to user interaction.
 
 ## New Features
@@ -181,6 +183,7 @@ REDIS_PASSWORD='your_redis_passsword'
 ## Usage Guide
 
 Please see the `README.md` for a detailed usage guide, including commands for running the Gradio UI and the command-line interface.
+
 
 
 
