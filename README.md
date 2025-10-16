@@ -20,12 +20,9 @@ This repository contains an extensible, production-grade platform that unifies k
 
 ## 🏗️ Architecture
 
-
+The system is designed with a modular, multi-layer architecture that separates concerns from data ingestion to user interaction.
 ![Architecture Diagram](./Architecture.png)
 ![view the Architecture.md](./ARCHITECTURE.md)
-
-
-The system is designed with a modular, multi-layer architecture that separates concerns from data ingestion to user interaction.
 
 ## 🛠️ Technology Stack & Tooling Rationale
 
@@ -89,23 +86,61 @@ This section details the tools used in each step of the pipeline, explaining why
 
 ---
 
-## ⚙️ Setup & Installation
+## ⚙️ Configuration
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd lyzr_challenge
-    ```
+The application is configured through environment variables, which are loaded from a `.env` file. You can copy the `.env.example` file to `.env` and fill in your API keys and other settings.
 
-2.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+Here are the most important settings:
 
-3.  **Set up environment variables:**
-    -   Copy the `.env.example` file to a new file named `.env`.
-    -   Open the `.env` file and fill in your API keys for Cohere, Groq, and any other services.
-    -   Configure your Neo4j database credentials.
+*   `EMBEDDING_PROVIDER`: The embedding provider to use. Defaults to "cohere".
+*   `QDRANT_VECTOR_SIZE`: The vector size for the Qdrant vector store. Defaults to 1024 for Cohere embeddings.
+*   `COHERE_API_KEY`: Your Cohere API key.
+*   `GROQ_API_KEY`: Your Groq API key.
+*   `NEO4J_URI`: The URI for your Neo4j database.
+*   `NEO4J_USER`: The username for your Neo4j database.
+*   `NEO4J_PASSWORD`: The password for your Neo4j database.
+
+---
+
+## 💻 Development
+
+This section describes the changes made to the application and the tools used to make them.
+
+### Changes Made
+
+*   **Configured Cohere Embeddings:** The application has been configured to use Cohere embeddings by default. The `EMBEDDING_PROVIDER` in `lyzr_challenge/config/settings.py` has been set to "cohere", and the `QDRANT_VECTOR_SIZE` has been set to 1024.
+*   **Fixed Bugs:** Several bugs have been fixed, including a `ValueError` when applying suggestions, a `SyntaxError` in the Gradio UI, and an `IndentationError` in the Gradio UI.
+*   **Added Download Graph Feature:** A "Download Graph" button has been added to the Gradio UI, which allows users to download the current ontology as a JSON file.
+*   **Added Versioning Feature:** A versioning system has been added to the ontology editor, allowing users to switch between different versions of the ontology.
+
+### Tools Used
+
+*   **`default_api.read_file`:** This tool was used to read the contents of files.
+*   **`default_api.replace`:** This tool was used to modify the contents of files.
+*   **`default_api.run_shell_command`:** This tool was used to run shell commands, such as deleting `__pycache__` directories and running the application.
+*   **`default_api.search_file_content`:** This tool was used to search for strings in files.
+
+---
+
+## 📊 Observability
+
+The application includes several features for observability, including logging, monitoring, evaluation, and data validation.
+
+### Logging
+
+The application uses the Python `logging` module to log events at different levels (INFO, WARNING, ERROR). The log configuration is centralized in `lyzr_challenge/config/settings.py`.
+
+### Monitoring
+
+The application uses `opik_tracer` to trace LLM calls, which provides a basic level of monitoring.
+
+### Evaluation Metrics
+
+The `lyzr_challenge/evaluation/evaluation_service.py` file defines a service for evaluating the performance of the RAG system. It tracks metrics like query length, answer length, routing confidence, and overall score.
+
+### Data Validation
+
+The `lyzr_challenge/knowledge_graph/graph_builder.py` file includes the `validate_graph_structure` method, which validates the structure of the knowledge graph before it's used.
 
 ---
 
@@ -132,5 +167,12 @@ python main.py
 To run only the query interface (assuming a PDF has already been processed):
 
 ```bash
+python main.py --query-only
+```
+
+
+
+
+
 python main.py --query-only
 ```
