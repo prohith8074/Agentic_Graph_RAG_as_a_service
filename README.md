@@ -22,7 +22,79 @@ This repository contains an extensible, production-grade platform that unifies k
 
 The system is designed with a modular, multi-layer architecture that separates concerns from data ingestion to user interaction.
 
-For a detailed visual representation of the architecture, please see the Mermaid code in the `architecture_graph.txt` file in this repository.
+```mermaid
+graph LR
+  %% ==== STYLE DEFINITIONS ====
+  classDef user fill:#f9f5ff,stroke:#b38cff,stroke-width:2px,color:#3d0073;
+  classDef etl fill:#fff8ef,stroke:#f2b279,stroke-width:2px,color:#4b2900;
+  classDef db fill:#fff4f4,stroke:#ff9e9e,stroke-width:2px,color:#5a0000;
+  classDef agent fill:#edf4ff,stroke:#6da8ff,stroke-width:2px,color:#002d80;
+  classDef ret fill:#f2fbf9,stroke:#7dd3b0,stroke-width:1px,color:#003d33;
+  classDef obs fill:#fff0f6,stroke:#f2a6c9,stroke-width:1px,color:#660033;
+
+  %% ==== TITLE ====
+  subgraph TITLE[" "]
+    style TITLE fill:transparent,stroke:transparent
+    T["Agentic Graph RAG — Clean Flow"]
+    style T fill:transparent,stroke:transparent,color:#000,font-size:24px,font-weight:bold
+  end
+
+  %% ==== MAIN PHASES ====
+  subgraph INGESTION ["Phase 1: Document Ingestion"]
+    direction TD
+    UDoc["📄 User Document"]:::user
+    ETL1["1. Parse Document"]:::etl
+    ETL2["2. Contextualize & Enrich"]:::etl
+    ETL3["3. Extract Entities & Relations"]:::etl
+    ETL4["4. Build Knowledge Graph"]:::etl
+    ETL5["5. Create Text Embeddings"]:::etl
+
+    UDoc --> ETL1 --> ETL2
+    ETL2 --> ETL3 --> ETL4
+    ETL2 --> ETL5
+  end
+
+  subgraph DATABASES ["Phase 2: Unified Data Storage"]
+    direction TD
+    DBGraph["🕸️ Knowledge Graph DB<br/>(Neo4j)"]:::db
+    DBVector["📦 Vector DB<br/>(Qdrant)"]:::db
+  end
+
+  subgraph QUERYING ["Phase 3: Query & Response"]
+    direction TD
+    UQuery["🧠 User Query / Response"]:::user
+    Router["⚙️ Query Router"]:::agent
+    Redis["⚡ Short-Term Memory<br/>(Redis)"]:::db
+    Retrieval["🔍 Retrieval Tools"]:::ret
+    Fusion["🔀 Hybrid Scorer"]:::ret
+    Synth["🤖 Response Generator"]:::ret
+
+    UQuery -- "Query" --> Router
+    Router <--> Redis
+    Router --> Retrieval --> Fusion --> Synth
+    Synth -- "Final Answer" --> UQuery
+  end
+
+  %% ==== OBSERVABILITY & MANAGEMENT ====
+  subgraph MANAGEMENT ["Observability & Management"]
+      direction TD
+      Opik["📊 LLM Tracer<br/>(Opik)"]:::obs
+      Ontology["🧩 Ontology Editor<br/>(Gradio)"]:::obs
+  end
+
+
+  %% ==== CONNECTIONS BETWEEN PHASES ====
+  ETL4 --> DBGraph
+  ETL5 --> DBVector
+  Retrieval -.-> DBGraph
+  Retrieval -.-> DBVector
+
+  %% ==== MANAGEMENT CONNECTIONS ====
+  MANAGEMENT -.-> INGESTION
+  MANAGEMENT -.-> QUERYING
+
+end
+```
 
 ---
 
@@ -35,7 +107,7 @@ This section details the tools used in each step of the pipeline, explaining why
 - **Tool Used**: **LlamaParse**
 - **About**: An API service from LlamaIndex that uses LLMs to parse complex documents, including text, tables, and images.
 - **Why Chosen**: It simplifies the ingestion pipeline immensely. Instead of building a complex, multi-stage process with separate tools for text extraction, table detection, and OCR, LlamaParse handles it all in a single, robust API call. This is far more effective for production-grade document processing.
-- **Alternatives**: `PyMuPDF`, `PDFMiner`, `Unstructured.io`. These are excellent libraries but would require more engineering effort to handle the variety of content within the PDFs as effectively.
+- **Alternatives**: `PyMuPDF`, `PDFMiner`, `Unstructured.io`.
 
 ### Step 2: Contextual Enrichment & Answer Synthesis
 
@@ -46,7 +118,7 @@ This section details the tools used in each step of the pipeline, explaining why
 
 ### Step 3: Agentic Routing & Planning
 
-- **Tool Used**: **Groq (openai/gpt-oss-120b Model)**
+- **Tool Used**: **Groq (Llama 3 70b)**
 - **About**: A service that runs open-source LLMs on custom LPU™ Inference Engine hardware, delivering extremely high performance (tokens/second).
 - **Why Chosen**: **Speed**. The core of an agentic system is its ability to reason and make decisions quickly. Groq's sub-second latency allows the `AdvancedQueryRouter` to analyze user intent, create a retrieval plan, and orchestrate tools in real-time, providing a seamless user experience that would be impossible with slower models.
 - **Alternatives**: `OpenAI GPT-3.5-Turbo`, local models (e.g., `Llama-3-8B`).
