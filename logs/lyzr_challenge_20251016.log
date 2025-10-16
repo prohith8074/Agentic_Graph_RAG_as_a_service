@@ -1,0 +1,1244 @@
+2025-10-16 08:02:43 [INFO] Logging system initialized
+2025-10-16 08:02:43 [INFO] Initializing database connections...
+2025-10-16 08:02:43 [INFO] Created neo4j graph adapter
+2025-10-16 08:02:43 [INFO] Registered graph database adapter: neo4j
+2025-10-16 08:02:43 [INFO] Set active graph adapter to: neo4j
+2025-10-16 08:02:45 [INFO] Successfully connected to Neo4j database
+2025-10-16 08:02:55 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 08:02:55 [INFO] Created qdrant vector adapter
+2025-10-16 08:02:55 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 08:04:04 [INFO] Environment variables loaded successfully
+2025-10-16 08:05:51 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760582149_Rohith_Resume.pdf
+2025-10-16 08:05:51 [INFO] Environment variables loaded successfully
+2025-10-16 08:05:52 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 08:06:00 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 08:06:00 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 08:06:00 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760582149_Rohith_Resume.pdf
+2025-10-16 08:06:10 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 08:06:10 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 08:06:10 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 08:06:10 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 08:06:10 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 08:06:10 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 08:06:10 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 08:06:10 [INFO] Processing chunk 1/2
+2025-10-16 08:06:13 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 08:06:20 [INFO] Processing chunk 2/2
+2025-10-16 08:06:21 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 08:06:28 [INFO] Successfully contextualized 2 chunks
+2025-10-16 08:06:28 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 08:06:28 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 08:06:28 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 08:06:28 [INFO] Processing chunk 1/2
+2025-10-16 08:06:50 [INFO] Successfully extracted data from chunk 1
+2025-10-16 08:06:57 [INFO] Processing chunk 2/2
+2025-10-16 08:07:05 [INFO] Successfully extracted data from chunk 2
+2025-10-16 08:07:12 [INFO] Completed processing 2 chunks
+2025-10-16 08:07:12 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 08:07:12 [WARNING] Failed to generate embeddings: 'CohereEmbeddings' object has no attribute 'embed_entities'. Continuing without vector embeddings.
+2025-10-16 08:07:12 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 08:07:12 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 2, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'PARTICIPATED_IN_EVENT': 1, 'COMPLETED_INTERNSHIP': 1, 'DEVELOPED': 4, 'ATTENDED': 3, 'RECEIVED_CERTIFICATE_FROM': 1, 'PARTICIPATED_IN': 1}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 08:07:12 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 08:07:13 [INFO] Created unique constraint on Entity.name
+2025-10-16 08:07:13 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 08:07:13 [INFO] Adding 13 unique entities...
+2025-10-16 08:07:14 [INFO] Adding 11 relationships...
+2025-10-16 08:07:15 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 08:07:15 [INFO] ✅ Neo4j population complete
+2025-10-16 08:07:15 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 08:07:15 [INFO] Received 2 chunks for vector store population.
+2025-10-16 08:07:15 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 08:07:15 [INFO] Generating embeddings for 2 documents...
+2025-10-16 08:07:16 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 08:07:16 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 08:07:16 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 08:07:16 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 08:07:17 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 08:08:27 [ERROR] Failed to generate retrieval plan: Error code: 400 - {'error': {'message': 'The model `llama3-8b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2025-10-16 08:08:33 [ERROR] Error generating answer: status_code: 404, body: {'id': 'd27cb2c4-c362-4357-9677-01eedf8828b0', 'message': "model 'command-r' was removed on September 15, 2025. See https://docs.cohere.com/docs/models#command for a list of models you can use instead."}
+2025-10-16 08:08:34 [INFO] Generated Cypher Query: MATCH (n:Entity)
+WHERE toLower(n.name) CONTAINS 'pdf'
+OPTIONAL MATCH (n)-[r:SUMMARIZED_BY]-(m)
+RETURN n.name AS name, n.type AS type, type(r) AS relation, m.name AS related_name, m.type AS related_type
+
+
+This query searches for an entity with the label "Entity" where the name contains the term "pdf" (case-insensitive). It then looks for a relationship of type "SUMMARIZED_BY" between the PDF entity and another entity (m). The query returns the names and types of both entities, the type of the relationship, and the related entity's details.
+
+However, if the graph does not have a specific relationship type for summarization, we might need to use a more general approach, such as looking for entities that are related to the PDF through other means (e.g., authorship, content, or usage). In that case, the query could be modified to include multiple relationship types or to use a more flexible matching pattern.
+2025-10-16 08:08:34 [ERROR] Error executing Cypher query: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'This': expected ',', 'ORDER BY', 'CALL', 'CREATE', 'LOAD CSV', 'DELETE', 'DETACH', 'FINISH', 'FOREACH', 'INSERT', 'LIMIT', 'MATCH', 'MERGE', 'NODETACH', 'OFFSET', 'OPTIONAL', 'REMOVE', 'RETURN', 'SET', 'SKIP', 'UNION', 'UNWIND', 'USE', 'WITH' or <EOF> (line 7, column 1 (offset: 204))
+"This query searches for an entity with the label "Entity" where the name contains the term "pdf" (case-insensitive). It then looks for a relationship of type "SUMMARIZED_BY" between the PDF entity and another entity (m). The query returns the names and types of both entities, the type of the relationship, and the related entity's details."
+ ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}
+2025-10-16 08:08:34 [ERROR] Error in graph query pipeline: {neo4j_code: Neo.ClientError.Statement.SyntaxError} {message: Invalid input 'This': expected ',', 'ORDER BY', 'CALL', 'CREATE', 'LOAD CSV', 'DELETE', 'DETACH', 'FINISH', 'FOREACH', 'INSERT', 'LIMIT', 'MATCH', 'MERGE', 'NODETACH', 'OFFSET', 'OPTIONAL', 'REMOVE', 'RETURN', 'SET', 'SKIP', 'UNION', 'UNWIND', 'USE', 'WITH' or <EOF> (line 7, column 1 (offset: 204))
+"This query searches for an entity with the label "Entity" where the name contains the term "pdf" (case-insensitive). It then looks for a relationship of type "SUMMARIZED_BY" between the PDF entity and another entity (m). The query returns the names and types of both entities, the type of the relationship, and the related entity's details."
+ ^} {gql_status: 42001} {gql_status_description: error: syntax error or access rule violation - invalid syntax}
+2025-10-16 08:08:34 [INFO] Fused 2 result lists into 3 documents using RRF.
+2025-10-16 08:08:34 [ERROR] Error synthesizing answers: Error code: 400 - {'error': {'message': 'The model `llama3-8b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2025-10-16 08:23:22 [INFO] Shutting down database connections...
+2025-10-16 08:23:22 [INFO] Disconnected from Neo4j database
+2025-10-16 08:40:15 [INFO] Logging system initialized
+2025-10-16 08:40:15 [INFO] Initializing database connections...
+2025-10-16 08:40:15 [INFO] Created neo4j graph adapter
+2025-10-16 08:40:15 [INFO] Registered graph database adapter: neo4j
+2025-10-16 08:40:15 [INFO] Set active graph adapter to: neo4j
+2025-10-16 08:40:16 [INFO] Successfully connected to Neo4j database
+2025-10-16 08:40:27 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 08:40:28 [INFO] Created qdrant vector adapter
+2025-10-16 08:40:28 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 09:12:04 [INFO] Logging system initialized
+2025-10-16 09:12:04 [INFO] Initializing database connections...
+2025-10-16 09:12:04 [INFO] Created neo4j graph adapter
+2025-10-16 09:12:04 [INFO] Registered graph database adapter: neo4j
+2025-10-16 09:12:04 [INFO] Set active graph adapter to: neo4j
+2025-10-16 09:12:05 [INFO] Successfully connected to Neo4j database
+2025-10-16 09:12:15 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 09:12:15 [INFO] Created qdrant vector adapter
+2025-10-16 09:12:15 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 09:13:10 [INFO] Environment variables loaded successfully
+2025-10-16 09:16:51 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760586410_Rohith_Resume.pdf
+2025-10-16 09:16:51 [INFO] Environment variables loaded successfully
+2025-10-16 09:16:51 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 09:16:59 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 09:16:59 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 09:16:59 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760586410_Rohith_Resume.pdf
+2025-10-16 09:17:08 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 09:17:08 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 09:17:08 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 09:17:08 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 09:17:08 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 09:17:08 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 09:17:08 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 09:17:08 [INFO] Processing chunk 1/2
+2025-10-16 09:17:10 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 09:17:17 [INFO] Processing chunk 2/2
+2025-10-16 09:17:19 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 09:17:26 [INFO] Successfully contextualized 2 chunks
+2025-10-16 09:17:26 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 09:17:26 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 09:17:26 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 09:17:26 [INFO] Processing chunk 1/2
+2025-10-16 09:17:38 [ERROR] Error extracting entities from text: status_code: 502, body: 
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>502 Server Error</title>
+</head>
+<body text=#000000 bgcolor=#ffffff>
+<h1>Error: Server Error</h1>
+<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>
+<h2></h2>
+</body></html>
+
+2025-10-16 09:17:38 [WARNING] Failed to extract data from chunk 1
+2025-10-16 09:17:45 [INFO] Processing chunk 2/2
+2025-10-16 09:17:53 [INFO] Successfully extracted data from chunk 2
+2025-10-16 09:18:00 [INFO] Completed processing 1 chunks
+2025-10-16 09:18:00 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 09:18:01 [INFO] Generated embeddings for 5 entities and 4 relationships
+2025-10-16 09:18:01 [INFO] Merged graph: 5 entities, 4 relationships
+2025-10-16 09:18:01 [INFO] ✅ Knowledge graph complete: {'num_entities': 5, 'num_relationships': 4, 'entity_types': {'Person': 1, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'RECEIVED_CERTIFICATE_FROM': 1, 'COMPLETED_INTERNSHIP': 1, 'PARTICIPATED_IN_EVENT': 1, 'PARTICIPATED_IN': 1}, 'avg_degree': 1.6, 'max_degree': 4, 'isolated_entities': 0}
+2025-10-16 09:18:01 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 09:18:02 [INFO] Created unique constraint on Entity.name
+2025-10-16 09:18:02 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 09:18:02 [INFO] Adding 5 unique entities...
+2025-10-16 09:18:02 [INFO] Adding 4 relationships...
+2025-10-16 09:18:03 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 09:18:03 [INFO] ✅ Neo4j population complete
+2025-10-16 09:18:03 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 09:18:03 [INFO] Received 2 chunks for vector store population.
+2025-10-16 09:18:03 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 09:18:03 [INFO] Generating embeddings for 2 documents...
+2025-10-16 09:18:03 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 09:18:03 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 09:18:03 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 09:18:03 [ERROR] ❌ Vector store population failed: could not broadcast input array from shape (1536,) into shape (1024,)
+Traceback (most recent call last):
+  File "E:\Projects\Multi_Agent\lyzr_challenge\main.py", line 333, in populate_vector_store
+    self.qdrant_client.upsert(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        collection_name=settings.QDRANT_COLLECTION_NAME,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        points=points,
+        ^^^^^^^^^^^^^^
+        wait=True  # Wait for the operation to complete
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\qdrant_client.py", line 1633, in upsert
+    return self._client.upsert(
+           ~~~~~~~~~~~~~~~~~~~^
+        collection_name=collection_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\qdrant_local.py", line 777, in upsert
+    collection.upsert(points)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 2301, in upsert
+    self._upsert_point(point)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 2293, in _upsert_point
+    self._add_point(point)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 2201, in _add_point
+    named_vectors[idx] = vector_np
+    ~~~~~~~~~~~~~^^^^^
+ValueError: could not broadcast input array from shape (1536,) into shape (1024,)
+2025-10-16 09:19:14 [INFO] Shutting down database connections...
+2025-10-16 09:19:14 [INFO] Disconnected from Neo4j database
+2025-10-16 09:25:17 [INFO] Logging system initialized
+2025-10-16 09:25:17 [INFO] Initializing database connections...
+2025-10-16 09:25:17 [INFO] Created neo4j graph adapter
+2025-10-16 09:25:17 [INFO] Registered graph database adapter: neo4j
+2025-10-16 09:25:17 [INFO] Set active graph adapter to: neo4j
+2025-10-16 09:25:18 [INFO] Successfully connected to Neo4j database
+2025-10-16 09:25:28 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 09:25:28 [INFO] Created qdrant vector adapter
+2025-10-16 09:25:28 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 09:25:28 [INFO] System initialized: {'python_version': '3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]', 'working_directory': 'E:\\Projects\\Multi_Agent\\lyzr_challenge', 'config': {'llm_model': 'openai/gpt-oss-20b', 'cohere_model': 'command-a-vision-07-2025', 'context_window_size': 2048, 'rate_limit_delay': 10}, 'timestamp': '2025-10-16T09:25:28.501519'}
+2025-10-16 09:25:28 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 09:25:35 [INFO] Shutting down database connections...
+2025-10-16 09:25:35 [INFO] Disconnected from Neo4j database
+2025-10-16 10:33:54 [INFO] Logging system initialized
+2025-10-16 10:33:54 [INFO] Initializing database connections...
+2025-10-16 10:33:54 [INFO] Created neo4j graph adapter
+2025-10-16 10:33:54 [INFO] Registered graph database adapter: neo4j
+2025-10-16 10:33:54 [INFO] Set active graph adapter to: neo4j
+2025-10-16 10:33:55 [INFO] Successfully connected to Neo4j database
+2025-10-16 10:34:05 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 10:34:05 [INFO] Created qdrant vector adapter
+2025-10-16 10:34:05 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 10:34:53 [INFO] Environment variables loaded successfully
+2025-10-16 10:47:09 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760591827_Rohith_Resume.pdf
+2025-10-16 10:47:09 [INFO] Environment variables loaded successfully
+2025-10-16 10:47:09 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 10:47:17 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 10:47:17 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 10:47:17 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760591827_Rohith_Resume.pdf
+2025-10-16 10:47:34 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 10:47:34 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 10:47:34 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 10:47:34 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 10:47:34 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 10:47:34 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 10:47:34 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 10:47:34 [INFO] Processing chunk 1/2
+2025-10-16 10:47:36 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 10:47:43 [INFO] Processing chunk 2/2
+2025-10-16 10:47:45 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 10:47:52 [INFO] Successfully contextualized 2 chunks
+2025-10-16 10:47:52 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 10:47:52 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 10:47:52 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 10:47:52 [INFO] Processing chunk 1/2
+2025-10-16 10:48:17 [INFO] Successfully extracted data from chunk 1
+2025-10-16 10:48:24 [INFO] Processing chunk 2/2
+2025-10-16 10:48:33 [INFO] Successfully extracted data from chunk 2
+2025-10-16 10:48:40 [INFO] Completed processing 2 chunks
+2025-10-16 10:48:40 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 10:48:42 [INFO] Generated embeddings for 13 entities and 11 relationships
+2025-10-16 10:48:42 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 10:48:42 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 2, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'RECEIVED_CERTIFICATE_FROM': 1, 'ATTENDED': 3, 'DEVELOPED': 4, 'PARTICIPATED_IN_EVENT': 1, 'PARTICIPATED_IN': 1, 'COMPLETED_INTERNSHIP': 1}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 10:48:42 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 10:48:43 [INFO] Created unique constraint on Entity.name
+2025-10-16 10:48:43 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 10:48:43 [INFO] Adding 13 unique entities...
+2025-10-16 10:48:43 [INFO] Adding 11 relationships...
+2025-10-16 10:48:44 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 10:48:44 [INFO] ✅ Neo4j population complete
+2025-10-16 10:48:44 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 10:48:44 [INFO] Received 2 chunks for vector store population.
+2025-10-16 10:48:44 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 10:48:44 [INFO] Generating embeddings for 2 documents...
+2025-10-16 10:48:45 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 10:48:45 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 10:48:45 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 10:48:45 [ERROR] ❌ Vector store population failed: could not broadcast input array from shape (1536,) into shape (1024,)
+Traceback (most recent call last):
+  File "E:\Projects\Multi_Agent\lyzr_challenge\main.py", line 333, in populate_vector_store
+    self.qdrant_client.upsert(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        collection_name=settings.QDRANT_COLLECTION_NAME,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        points=points,
+        ^^^^^^^^^^^^^^
+        wait=True  # Wait for the operation to complete
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\qdrant_client.py", line 1633, in upsert
+    return self._client.upsert(
+           ~~~~~~~~~~~~~~~~~~~^
+        collection_name=collection_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\qdrant_local.py", line 777, in upsert
+    collection.upsert(points)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 2301, in upsert
+    self._upsert_point(point)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 2293, in _upsert_point
+    self._add_point(point)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 2201, in _add_point
+    named_vectors[idx] = vector_np
+    ~~~~~~~~~~~~~^^^^^
+ValueError: could not broadcast input array from shape (1536,) into shape (1024,)
+2025-10-16 10:52:38 [INFO] Generated retrieval plan: {'core_query': 'project certificate', 'tools': ['search_filter', 'search_vector'], 'filters': {'must': [{'key': 'metadata.certificate', 'match': {'value': True}}]}, 'reasoning': 'The user wants projects that have a certificate, which is a filter condition. A semantic query for "project certificate" combined with a filter on metadata.certificate is optimal.'}
+2025-10-16 10:52:38 [INFO] FilterPlugin: Processing query...
+2025-10-16 10:52:40 [ERROR] Error retrieving similar chunks via adapter: shapes (0,1024) and (1536,) not aligned: 1024 (dim 1) != 1536 (dim 0)
+Traceback (most recent call last):
+  File "E:\Projects\Multi_Agent\lyzr_challenge\query\vector_query.py", line 34, in retrieve_similar_chunks
+    return self.adapter.retrieve_similar_chunks(query_embedding, top_k, filters)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Projects\Multi_Agent\lyzr_challenge\database_adapters\vector\qdrant_adapter.py", line 51, in retrieve_similar_chunks
+    search_results = self.client.search(**search_params)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\qdrant_client.py", line 376, in search
+    return self._client.search(
+           ~~~~~~~~~~~~~~~~~~~^
+        collection_name=collection_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\qdrant_local.py", line 215, in search
+    return collection.search(
+           ~~~~~~~~~~~~~~~~~^
+        query_vector=query_vector,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        score_threshold=score_threshold,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 588, in search
+    scores = calculate_distance(query_vector, vectors, distance)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\distances.py", line 156, in calculate_distance
+    return cosine_similarity(query, vectors)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\distances.py", line 98, in cosine_similarity
+    return np.dot(vectors, query)
+           ~~~~~~^^^^^^^^^^^^^^^^
+ValueError: shapes (0,1024) and (1536,) not aligned: 1024 (dim 1) != 1536 (dim 0)
+2025-10-16 10:52:41 [INFO] LLM extracted filters: {} and core query: 'project certificate'
+2025-10-16 10:52:41 [INFO] Performing filtered vector search with core_query: 'project certificate' and filters: {}
+2025-10-16 10:52:41 [ERROR] Error retrieving similar chunks via adapter: shapes (0,1024) and (1536,) not aligned: 1024 (dim 1) != 1536 (dim 0)
+Traceback (most recent call last):
+  File "E:\Projects\Multi_Agent\lyzr_challenge\query\vector_query.py", line 34, in retrieve_similar_chunks
+    return self.adapter.retrieve_similar_chunks(query_embedding, top_k, filters)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Projects\Multi_Agent\lyzr_challenge\database_adapters\vector\qdrant_adapter.py", line 51, in retrieve_similar_chunks
+    search_results = self.client.search(**search_params)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\qdrant_client.py", line 376, in search
+    return self._client.search(
+           ~~~~~~~~~~~~~~~~~~~^
+        collection_name=collection_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\qdrant_local.py", line 215, in search
+    return collection.search(
+           ~~~~~~~~~~~~~~~~~^
+        query_vector=query_vector,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        score_threshold=score_threshold,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 588, in search
+    scores = calculate_distance(query_vector, vectors, distance)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\distances.py", line 156, in calculate_distance
+    return cosine_similarity(query, vectors)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\distances.py", line 98, in cosine_similarity
+    return np.dot(vectors, query)
+           ~~~~~~^^^^^^^^^^^^^^^^
+ValueError: shapes (0,1024) and (1536,) not aligned: 1024 (dim 1) != 1536 (dim 0)
+2025-10-16 10:52:41 [INFO] Fused 2 result lists into 1 documents using RRF.
+2025-10-16 10:52:42 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 10:53:23 [INFO] Generated retrieval plan: {'core_query': 'certificates', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'The user’s request is a broad, unfiltered query for certificates, so a simple vector search is appropriate to retrieve relevant information.'}
+2025-10-16 10:53:24 [ERROR] Error retrieving similar chunks via adapter: shapes (0,1024) and (1536,) not aligned: 1024 (dim 1) != 1536 (dim 0)
+Traceback (most recent call last):
+  File "E:\Projects\Multi_Agent\lyzr_challenge\query\vector_query.py", line 34, in retrieve_similar_chunks
+    return self.adapter.retrieve_similar_chunks(query_embedding, top_k, filters)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Projects\Multi_Agent\lyzr_challenge\database_adapters\vector\qdrant_adapter.py", line 51, in retrieve_similar_chunks
+    search_results = self.client.search(**search_params)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\qdrant_client.py", line 376, in search
+    return self._client.search(
+           ~~~~~~~~~~~~~~~~~~~^
+        collection_name=collection_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\qdrant_local.py", line 215, in search
+    return collection.search(
+           ~~~~~~~~~~~~~~~~~^
+        query_vector=query_vector,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        score_threshold=score_threshold,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\local_collection.py", line 588, in search
+    scores = calculate_distance(query_vector, vectors, distance)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\distances.py", line 156, in calculate_distance
+    return cosine_similarity(query, vectors)
+  File "C:\Users\acer\AppData\Roaming\Python\Python313\site-packages\qdrant_client\local\distances.py", line 98, in cosine_similarity
+    return np.dot(vectors, query)
+           ~~~~~~^^^^^^^^^^^^^^^^
+ValueError: shapes (0,1024) and (1536,) not aligned: 1024 (dim 1) != 1536 (dim 0)
+2025-10-16 10:53:24 [INFO] Fused 1 result lists into 1 documents using RRF.
+2025-10-16 10:53:24 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 11:02:32 [INFO] Shutting down database connections...
+2025-10-16 11:02:32 [INFO] Disconnected from Neo4j database
+2025-10-16 11:20:16 [INFO] Logging system initialized
+2025-10-16 11:20:16 [INFO] Initializing database connections...
+2025-10-16 11:20:16 [INFO] Created neo4j graph adapter
+2025-10-16 11:20:16 [INFO] Registered graph database adapter: neo4j
+2025-10-16 11:20:16 [INFO] Set active graph adapter to: neo4j
+2025-10-16 11:20:17 [INFO] Successfully connected to Neo4j database
+2025-10-16 11:20:27 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 11:20:27 [INFO] Created qdrant vector adapter
+2025-10-16 11:20:27 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 11:21:04 [INFO] Environment variables loaded successfully
+2025-10-16 11:28:21 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760594300_Rohith_Resume.pdf
+2025-10-16 11:28:21 [INFO] Environment variables loaded successfully
+2025-10-16 11:28:21 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 11:28:29 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 11:28:29 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 11:28:29 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760594300_Rohith_Resume.pdf
+2025-10-16 11:28:40 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 11:28:40 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 11:28:40 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 11:28:40 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 11:28:40 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 11:28:40 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 11:28:40 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 11:28:40 [INFO] Processing chunk 1/2
+2025-10-16 11:28:42 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 11:28:49 [INFO] Processing chunk 2/2
+2025-10-16 11:28:51 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 11:28:58 [INFO] Successfully contextualized 2 chunks
+2025-10-16 11:28:58 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 11:28:58 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 11:28:58 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 11:28:58 [INFO] Processing chunk 1/2
+2025-10-16 11:29:21 [INFO] Successfully extracted data from chunk 1
+2025-10-16 11:29:28 [INFO] Processing chunk 2/2
+2025-10-16 11:29:36 [INFO] Successfully extracted data from chunk 2
+2025-10-16 11:29:43 [INFO] Completed processing 2 chunks
+2025-10-16 11:29:43 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 11:29:44 [INFO] Generated embeddings for 13 entities and 11 relationships
+2025-10-16 11:29:44 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 11:29:44 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 2, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'PARTICIPATED_IN': 1, 'RECEIVED_CERTIFICATE_FROM': 1, 'DEVELOPED': 4, 'PARTICIPATED_IN_EVENT': 1, 'ATTENDED': 3, 'COMPLETED_INTERNSHIP': 1}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 11:29:44 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 11:29:44 [INFO] Created unique constraint on Entity.name
+2025-10-16 11:29:44 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 11:29:44 [INFO] Adding 13 unique entities...
+2025-10-16 11:29:45 [INFO] Adding 11 relationships...
+2025-10-16 11:29:46 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 11:29:46 [INFO] ✅ Neo4j population complete
+2025-10-16 11:29:46 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 11:29:46 [INFO] Received 2 chunks for vector store population.
+2025-10-16 11:29:46 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 11:29:46 [INFO] Generating embeddings for 2 documents...
+2025-10-16 11:29:46 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 11:29:46 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 11:29:46 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 11:29:46 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 11:29:47 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 11:31:33 [INFO] Generated retrieval plan: {'core_query': 'projects', 'tools': ['search_vector'], 'filters': {'must': []}, 'reasoning': 'The user request is broad and contains no explicit filter conditions, so a simple semantic vector search for the term "projects" is sufficient.'}
+2025-10-16 11:31:43 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 11:31:44 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 11:32:16 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 11:32:55 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 14:54:09 [INFO] Logging system initialized
+2025-10-16 14:54:09 [INFO] Initializing database connections...
+2025-10-16 14:54:09 [INFO] Created neo4j graph adapter
+2025-10-16 14:54:09 [INFO] Registered graph database adapter: neo4j
+2025-10-16 14:54:09 [INFO] Set active graph adapter to: neo4j
+2025-10-16 14:54:10 [INFO] Successfully connected to Neo4j database
+2025-10-16 14:54:20 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 14:54:20 [INFO] Created qdrant vector adapter
+2025-10-16 14:54:20 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 14:54:24 [INFO] Shutting down database connections...
+2025-10-16 14:54:24 [INFO] Disconnected from Neo4j database
+2025-10-16 14:58:30 [INFO] Logging system initialized
+2025-10-16 14:58:30 [INFO] Initializing database connections...
+2025-10-16 14:58:30 [INFO] Created neo4j graph adapter
+2025-10-16 14:58:30 [INFO] Registered graph database adapter: neo4j
+2025-10-16 14:58:30 [INFO] Set active graph adapter to: neo4j
+2025-10-16 14:58:31 [INFO] Successfully connected to Neo4j database
+2025-10-16 14:58:41 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 14:58:41 [INFO] Created qdrant vector adapter
+2025-10-16 14:58:41 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 14:58:41 [INFO] Shutting down database connections...
+2025-10-16 14:58:41 [INFO] Disconnected from Neo4j database
+2025-10-16 15:24:48 [INFO] Logging system initialized
+2025-10-16 15:24:48 [INFO] Initializing database connections...
+2025-10-16 15:24:48 [INFO] Created neo4j graph adapter
+2025-10-16 15:24:48 [INFO] Registered graph database adapter: neo4j
+2025-10-16 15:24:48 [INFO] Set active graph adapter to: neo4j
+2025-10-16 15:24:49 [INFO] Successfully connected to Neo4j database
+2025-10-16 15:24:59 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 15:24:59 [INFO] Created qdrant vector adapter
+2025-10-16 15:24:59 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 15:25:00 [INFO] Shutting down database connections...
+2025-10-16 15:25:00 [INFO] Disconnected from Neo4j database
+2025-10-16 15:26:27 [INFO] Logging system initialized
+2025-10-16 15:26:27 [INFO] Initializing database connections...
+2025-10-16 15:26:27 [INFO] Created neo4j graph adapter
+2025-10-16 15:26:27 [INFO] Registered graph database adapter: neo4j
+2025-10-16 15:26:27 [INFO] Set active graph adapter to: neo4j
+2025-10-16 15:26:28 [INFO] Successfully connected to Neo4j database
+2025-10-16 15:26:38 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 15:26:38 [INFO] Created qdrant vector adapter
+2025-10-16 15:26:38 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 15:26:38 [INFO] Shutting down database connections...
+2025-10-16 15:26:38 [INFO] Disconnected from Neo4j database
+2025-10-16 15:36:13 [INFO] Logging system initialized
+2025-10-16 15:36:13 [INFO] Initializing database connections...
+2025-10-16 15:36:13 [INFO] Created neo4j graph adapter
+2025-10-16 15:36:13 [INFO] Registered graph database adapter: neo4j
+2025-10-16 15:36:13 [INFO] Set active graph adapter to: neo4j
+2025-10-16 15:36:13 [INFO] Successfully connected to Neo4j database
+2025-10-16 15:36:23 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 15:36:23 [INFO] Created qdrant vector adapter
+2025-10-16 15:36:23 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 15:37:22 [INFO] Environment variables loaded successfully
+2025-10-16 15:43:04 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760609583_Rohith_Resume.pdf
+2025-10-16 15:43:04 [INFO] Environment variables loaded successfully
+2025-10-16 15:43:04 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 15:43:14 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 15:43:14 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 15:43:14 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760609583_Rohith_Resume.pdf
+2025-10-16 15:43:24 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 15:43:24 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 15:43:24 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 15:43:24 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 15:43:24 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 15:43:24 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 15:43:25 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 15:43:25 [INFO] Processing chunk 1/2
+2025-10-16 15:43:27 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 15:43:34 [INFO] Processing chunk 2/2
+2025-10-16 15:43:35 [INFO] Completed chunk 2: Panchangam Rohith has achieved notable success in ...
+2025-10-16 15:43:42 [INFO] Successfully contextualized 2 chunks
+2025-10-16 15:43:42 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 15:43:42 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 15:43:42 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 15:43:42 [INFO] Processing chunk 1/2
+2025-10-16 15:44:05 [INFO] Successfully extracted data from chunk 1
+2025-10-16 15:44:12 [INFO] Processing chunk 2/2
+2025-10-16 15:44:20 [INFO] Successfully extracted data from chunk 2
+2025-10-16 15:44:27 [INFO] Completed processing 2 chunks
+2025-10-16 15:44:27 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 15:44:33 [INFO] Generated embeddings for 12 entities and 11 relationships
+2025-10-16 15:44:33 [INFO] Merged graph: 12 entities, 11 relationships
+2025-10-16 15:44:33 [INFO] ✅ Knowledge graph complete: {'num_entities': 12, 'num_relationships': 11, 'entity_types': {'Person': 1, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'DEVELOPED': 4, 'ATTENDED': 3, 'PARTICIPATED_IN_EVENT': 1, 'PARTICIPATED_IN': 1, 'COMPLETED_INTERNSHIP': 1, 'RECEIVED_CERTIFICATE_FROM': 1}, 'avg_degree': 1.8333333333333333, 'max_degree': 11, 'isolated_entities': 0}
+2025-10-16 15:44:33 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 15:44:33 [INFO] Created unique constraint on Entity.name
+2025-10-16 15:44:33 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 15:44:33 [INFO] Adding 12 unique entities...
+2025-10-16 15:44:34 [INFO] Adding 11 relationships...
+2025-10-16 15:44:35 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 15:44:35 [INFO] ✅ Neo4j population complete
+2025-10-16 15:44:35 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 15:44:35 [INFO] Received 2 chunks for vector store population.
+2025-10-16 15:44:35 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 15:44:35 [INFO] Generating embeddings for 2 documents...
+2025-10-16 15:44:52 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 15:44:52 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 15:44:52 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 15:44:52 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 15:44:53 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 15:45:31 [ERROR] Failed to generate retrieval plan: Expecting value: line 1 column 1 (char 0)
+2025-10-16 15:45:34 [INFO] Generated Cypher Query: MATCH (n:Entity)
+WHERE n.type = 'Project' AND n.properties CONTAINS 'certificate'
+OPTIONAL MATCH (n)-[r]-(m)
+RETURN n.name AS name, n.type AS type, type(r) AS relation, m.name AS related_name, m.type AS related_type
+2025-10-16 15:45:34 [WARNING] Received notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `properties` does not exist in database `neo4j`. Verify that the spelling is correct.', position=<SummaryInputPosition line=2, column=32, offset=48>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 48, 'line': 2, 'column': 32}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (n:Entity)\nWHERE n.type = 'Project' AND n.properties CONTAINS 'certificate'\nOPTIONAL MATCH (n)-[r]-(m)\nRETURN n.name AS name, n.type AS type, type(r) AS relation, m.name AS related_name, m.type AS related_type"
+2025-10-16 15:45:39 [INFO] Fused 2 result lists into 3 documents using RRF.
+2025-10-16 15:45:40 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 15:46:03 [INFO] Ontology loaded with 12 entities and 11 relationships
+2025-10-16 15:48:29 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 15:48:39 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 16:04:01 [INFO] Shutting down database connections...
+2025-10-16 16:04:01 [INFO] Disconnected from Neo4j database
+2025-10-16 16:05:09 [INFO] Logging system initialized
+2025-10-16 16:05:09 [INFO] Initializing database connections...
+2025-10-16 16:05:09 [INFO] Created neo4j graph adapter
+2025-10-16 16:05:09 [INFO] Registered graph database adapter: neo4j
+2025-10-16 16:05:09 [INFO] Set active graph adapter to: neo4j
+2025-10-16 16:05:10 [INFO] Successfully connected to Neo4j database
+2025-10-16 16:05:20 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 16:05:20 [INFO] Created qdrant vector adapter
+2025-10-16 16:05:20 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 16:05:20 [INFO] Shutting down database connections...
+2025-10-16 16:05:20 [INFO] Disconnected from Neo4j database
+2025-10-16 16:11:59 [INFO] Logging system initialized
+2025-10-16 16:11:59 [INFO] Initializing database connections...
+2025-10-16 16:11:59 [INFO] Created neo4j graph adapter
+2025-10-16 16:11:59 [INFO] Registered graph database adapter: neo4j
+2025-10-16 16:11:59 [INFO] Set active graph adapter to: neo4j
+2025-10-16 16:12:00 [INFO] Successfully connected to Neo4j database
+2025-10-16 16:12:10 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 16:12:10 [INFO] Created qdrant vector adapter
+2025-10-16 16:12:10 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 16:12:54 [INFO] Environment variables loaded successfully
+2025-10-16 16:13:37 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760611417_attention is al you need.pdf
+2025-10-16 16:13:37 [INFO] Environment variables loaded successfully
+2025-10-16 16:13:37 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 16:13:47 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 16:13:47 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 16:13:47 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760611417_attention is al you need.pdf
+2025-10-16 16:13:59 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 16:13:59 [INFO] Successfully parsed PDF into 15 documents
+2025-10-16 16:13:59 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 16:13:59 [INFO] Extracted 15 nodes from 15 documents
+2025-10-16 16:13:59 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 16:13:59 [INFO] ✅ PDF parsing complete: 15 documents, 15 nodes
+2025-10-16 16:13:59 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 16:13:59 [INFO] Processing chunk 1/15
+2025-10-16 16:14:02 [INFO] Completed chunk 1: The Transformer model, proposed in the paper "Atte...
+2025-10-16 16:14:09 [INFO] Processing chunk 2/15
+2025-10-16 16:14:11 [INFO] Completed chunk 2: The chunk introduces the Transformer model, which ...
+2025-10-16 16:14:18 [INFO] Processing chunk 3/15
+2025-10-16 16:14:21 [INFO] Completed chunk 3: The Transformer model architecture, illustrated in...
+2025-10-16 16:14:28 [INFO] Processing chunk 4/15
+2025-10-16 16:14:30 [INFO] Completed chunk 4: The chunk discusses the Scaled Dot-Product Attenti...
+2025-10-16 16:14:37 [INFO] Processing chunk 5/15
+2025-10-16 16:14:39 [INFO] Completed chunk 5: The chunk describes the multi-head attention mecha...
+2025-10-16 16:14:46 [INFO] Processing chunk 6/15
+2025-10-16 16:14:49 [INFO] Completed chunk 6: The chunk discusses the advantages of self-attenti...
+2025-10-16 16:14:56 [INFO] Processing chunk 7/15
+2025-10-16 16:14:58 [INFO] Completed chunk 7: The Transformer model utilizes self-attention mech...
+2025-10-16 16:15:05 [INFO] Processing chunk 8/15
+2025-10-16 16:15:07 [INFO] Completed chunk 8: The Transformer model achieves state-of-the-art BL...
+2025-10-16 16:15:14 [INFO] Processing chunk 9/15
+2025-10-16 16:15:17 [INFO] Completed chunk 9: The chunk details variations of the Transformer mo...
+2025-10-16 16:15:24 [INFO] Processing chunk 10/15
+2025-10-16 16:15:29 [INFO] Completed chunk 10: The Transformer model demonstrates strong performa...
+2025-10-16 16:15:36 [INFO] Processing chunk 11/15
+2025-10-16 16:15:38 [INFO] Completed chunk 11: The chunk discusses various aspects of neural mach...
+2025-10-16 16:15:45 [INFO] Processing chunk 12/15
+2025-10-16 16:15:48 [INFO] Completed chunk 12: The chunk primarily discusses various advancements...
+2025-10-16 16:15:55 [INFO] Processing chunk 13/15
+2025-10-16 16:15:57 [INFO] Completed chunk 13: The chunk illustrates the attention mechanism in a...
+2025-10-16 16:16:04 [INFO] Processing chunk 14/15
+2025-10-16 16:16:06 [INFO] Completed chunk 14: The chunk illustrates the behavior of two attentio...
+2025-10-16 16:16:13 [INFO] Processing chunk 15/15
+2025-10-16 16:16:15 [INFO] Completed chunk 15: The chunk illustrates how different attention head...
+2025-10-16 16:16:22 [INFO] Successfully contextualized 15 chunks
+2025-10-16 16:16:22 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 16:16:22 [INFO] ✅ Contextualization complete: 15 chunks
+2025-10-16 16:16:22 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 16:16:22 [INFO] Processing chunk 1/15
+2025-10-16 16:16:46 [INFO] Successfully extracted data from chunk 1
+2025-10-16 16:16:53 [INFO] Processing chunk 2/15
+2025-10-16 16:17:02 [INFO] Successfully extracted data from chunk 2
+2025-10-16 16:17:09 [INFO] Processing chunk 3/15
+2025-10-16 16:17:24 [INFO] Successfully extracted data from chunk 3
+2025-10-16 16:17:31 [INFO] Processing chunk 4/15
+2025-10-16 16:17:41 [INFO] Successfully extracted data from chunk 4
+2025-10-16 16:17:48 [INFO] Processing chunk 5/15
+2025-10-16 16:18:05 [INFO] Successfully extracted data from chunk 5
+2025-10-16 16:18:12 [INFO] Processing chunk 6/15
+2025-10-16 16:18:23 [INFO] Successfully extracted data from chunk 6
+2025-10-16 16:18:30 [INFO] Processing chunk 7/15
+2025-10-16 16:18:51 [INFO] Successfully extracted data from chunk 7
+2025-10-16 16:18:58 [INFO] Processing chunk 8/15
+2025-10-16 16:19:24 [INFO] Successfully extracted data from chunk 8
+2025-10-16 16:19:31 [INFO] Processing chunk 9/15
+2025-10-16 16:20:06 [INFO] Successfully extracted data from chunk 9
+2025-10-16 16:20:13 [INFO] Processing chunk 10/15
+2025-10-16 16:20:41 [INFO] Successfully extracted data from chunk 10
+2025-10-16 16:20:48 [INFO] Processing chunk 11/15
+2025-10-16 16:20:55 [INFO] Successfully extracted data from chunk 11
+2025-10-16 16:21:02 [INFO] Processing chunk 12/15
+2025-10-16 16:21:25 [INFO] Successfully extracted data from chunk 12
+2025-10-16 16:21:32 [INFO] Processing chunk 13/15
+2025-10-16 16:21:37 [INFO] Successfully extracted data from chunk 13
+2025-10-16 16:21:45 [INFO] Processing chunk 14/15
+2025-10-16 16:21:53 [INFO] Successfully extracted data from chunk 14
+2025-10-16 16:22:00 [INFO] Processing chunk 15/15
+2025-10-16 16:22:07 [INFO] Successfully extracted data from chunk 15
+2025-10-16 16:22:14 [INFO] Completed processing 15 chunks
+2025-10-16 16:22:14 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 16:22:21 [INFO] Generated embeddings for 104 entities and 119 relationships
+2025-10-16 16:22:21 [INFO] Merged graph: 104 entities, 119 relationships
+2025-10-16 16:22:21 [INFO] ✅ Knowledge graph complete: {'num_entities': 104, 'num_relationships': 119, 'entity_types': {'Model': 4, 'Mechanism': 2, 'Task': 2, 'Metric': 1, 'Person': 8, 'model component': 4, 'model architecture': 2, 'attention mechanism': 5, 'feed-forward network': 1, 'additive': 1, 'normalization technique': 1, 'mathematical operation': 1, 'mathematical function': 1, 'Attention type': 3, 'Network type': 1, 'Technique': 4, 'Layer Type': 3, 'process': 1, 'layer': 1, 'convolution': 1, 'data': 1, 'dataset': 2, 'batch': 1, 'hardware': 1, 'step': 1, 'model': 2, 'optimizer': 1, 'rate': 1, 'regularization': 1, 'Machine Translation Model': 7, 'Machine Translation Model Ensemble': 3, 'table': 1, 'Dataset': 2, 'Machine Learning Model': 3, 'Research Paper': 10, 'Concept': 1, 'Technology': 1, 'Event': 3, 'Organization': 1, 'Repository': 2, 'Journal': 1, 'component': 2, 'concept': 1, 'Attention Head': 2, 'Linguistic Concept': 1, 'Token': 2, 'attention head': 2, 'text': 1}, 'relationship_types': {'COMPLEXITY': 1, 'OUTPERFORMS': 7, 'USED_IN': 15, 'COMPARED_TO': 9, 'REPLACES': 2, 'CONTRIBUTED_TO': 8, 'ATTENDS_TO': 4, 'IS_USED_IN': 1, 'FOCUSES_ON': 1, 'RESULTS': 1, 'USES': 32, 'EVALUATED_ON': 1, 'ALTERNATIVE_TO': 1, 'CONTAINS': 12, 'RELATED_TO': 3, 'INCLUDES': 3, 'COMPARABLE_TO': 4, 'RESOLVES': 3, 'YIELDS': 1, 'CAPTURE': 1, 'IS_A': 1, 'VARIATIONS_AND_RESULTS': 1, 'SAME_MODEL': 2, 'APPLIED_TO': 2, 'APPLICATION': 1, 'UTILIZES': 1, 'EVALUATED_BY': 1}, 'avg_degree': 2.2884615384615383, 'max_degree': 54, 'isolated_entities': 0}
+2025-10-16 16:22:21 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 16:22:21 [INFO] Created unique constraint on Entity.name
+2025-10-16 16:22:21 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 16:22:21 [INFO] Adding 104 unique entities...
+2025-10-16 16:22:29 [INFO] Adding 119 relationships...
+2025-10-16 16:22:40 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 16:22:40 [INFO] ✅ Neo4j population complete
+2025-10-16 16:22:40 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 16:22:40 [INFO] Received 15 chunks for vector store population.
+2025-10-16 16:22:40 [INFO] ✅ Chunk filtering complete: 15 valid chunks, 0 filtered out
+2025-10-16 16:22:40 [INFO] Generating embeddings for 15 documents...
+2025-10-16 16:22:41 [INFO] Attempting to upsert 15 points to Qdrant...
+2025-10-16 16:22:41 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 16:22:41 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 16:22:41 [INFO] ✅ Upsert operation completed for 15 points.
+2025-10-16 16:22:42 [INFO] ✅ Verified: 15 vectors successfully stored in Qdrant!
+2025-10-16 16:25:56 [ERROR] Failed to generate retrieval plan: Expecting value: line 1 column 1 (char 0)
+2025-10-16 16:25:59 [INFO] Generated Cypher Query: MATCH (n:Entity)
+WHERE toLower(n.name) CONTAINS 'transformer'
+OPTIONAL MATCH (n)-[r]-(m)
+RETURN n.name AS name, n.type AS type, type(r) AS relation, m.name AS related_name, m.type AS related_type
+2025-10-16 16:26:09 [INFO] Fused 2 result lists into 6 documents using RRF.
+2025-10-16 16:26:11 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 16:29:01 [INFO] Ontology loaded with 104 entities and 119 relationships
+2025-10-16 16:30:44 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 16:48:53 [INFO] Shutting down database connections...
+2025-10-16 16:48:53 [INFO] Disconnected from Neo4j database
+2025-10-16 16:52:24 [INFO] Logging system initialized
+2025-10-16 16:52:24 [INFO] Initializing database connections...
+2025-10-16 16:52:24 [INFO] Created neo4j graph adapter
+2025-10-16 16:52:24 [INFO] Registered graph database adapter: neo4j
+2025-10-16 16:52:24 [INFO] Set active graph adapter to: neo4j
+2025-10-16 16:52:24 [INFO] Successfully connected to Neo4j database
+2025-10-16 16:52:34 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 16:52:34 [INFO] Created qdrant vector adapter
+2025-10-16 16:52:34 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 16:53:20 [INFO] Environment variables loaded successfully
+2025-10-16 17:12:08 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760614928_attention is al you need.pdf
+2025-10-16 17:12:08 [INFO] Environment variables loaded successfully
+2025-10-16 17:12:08 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 17:12:30 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 17:12:30 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 17:12:30 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760614928_attention is al you need.pdf
+2025-10-16 17:12:44 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:12:44 [INFO] Successfully parsed PDF into 15 documents
+2025-10-16 17:12:44 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:12:44 [INFO] Extracted 15 nodes from 15 documents
+2025-10-16 17:12:44 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 17:12:44 [INFO] ✅ PDF parsing complete: 15 documents, 15 nodes
+2025-10-16 17:12:44 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 17:12:44 [INFO] Processing chunk 1/15
+2025-10-16 17:12:46 [INFO] Completed chunk 1: The Transformer model, proposed in this paper, rev...
+2025-10-16 17:12:53 [INFO] Processing chunk 2/15
+2025-10-16 17:12:55 [INFO] Completed chunk 2: The chunk discusses the introduction and backgroun...
+2025-10-16 17:13:02 [INFO] Processing chunk 3/15
+2025-10-16 17:13:05 [INFO] Completed chunk 3: The Transformer model architecture, depicted in Fi...
+2025-10-16 17:13:12 [INFO] Processing chunk 4/15
+2025-10-16 17:13:14 [INFO] Completed chunk 4: The chunk discusses the Scaled Dot-Product Attenti...
+2025-10-16 17:13:21 [INFO] Processing chunk 5/15
+2025-10-16 17:13:23 [INFO] Completed chunk 5: The chunk describes the multi-head attention mecha...
+2025-10-16 17:13:30 [INFO] Processing chunk 6/15
+2025-10-16 17:13:32 [INFO] Completed chunk 6: The chunk discusses the advantages of self-attenti...
+2025-10-16 17:13:39 [INFO] Processing chunk 7/15
+2025-10-16 17:13:41 [INFO] Completed chunk 7: The Transformer model utilizes self-attention mech...
+2025-10-16 17:13:48 [INFO] Processing chunk 8/15
+2025-10-16 17:13:51 [INFO] Completed chunk 8: The Transformer model achieves state-of-the-art BL...
+2025-10-16 17:13:58 [INFO] Processing chunk 9/15
+2025-10-16 17:14:02 [INFO] Completed chunk 9: The chunk details variations of the Transformer ar...
+2025-10-16 17:14:09 [INFO] Processing chunk 10/15
+2025-10-16 17:14:10 [INFO] Completed chunk 10: The Transformer model demonstrates strong performa...
+2025-10-16 17:14:17 [INFO] Processing chunk 11/15
+2025-10-16 17:14:20 [INFO] Completed chunk 11: The chunk discusses various aspects of neural mach...
+2025-10-16 17:14:27 [INFO] Processing chunk 12/15
+2025-10-16 17:14:29 [INFO] Completed chunk 12: The chunk primarily discusses various advancements...
+2025-10-16 17:14:36 [INFO] Processing chunk 13/15
+2025-10-16 17:14:38 [INFO] Completed chunk 13: The chunk illustrates how the attention mechanism ...
+2025-10-16 17:14:45 [INFO] Processing chunk 14/15
+2025-10-16 17:14:47 [INFO] Completed chunk 14: The chunk illustrates the behavior of two attentio...
+2025-10-16 17:14:54 [INFO] Processing chunk 15/15
+2025-10-16 17:14:56 [INFO] Completed chunk 15: The chunk illustrates how different attention head...
+2025-10-16 17:15:03 [INFO] Successfully contextualized 15 chunks
+2025-10-16 17:15:03 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 17:15:03 [INFO] ✅ Contextualization complete: 15 chunks
+2025-10-16 17:15:03 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 17:15:03 [INFO] Processing chunk 1/15
+2025-10-16 17:15:24 [INFO] Successfully extracted data from chunk 1
+2025-10-16 17:15:31 [INFO] Processing chunk 2/15
+2025-10-16 17:15:39 [INFO] Successfully extracted data from chunk 2
+2025-10-16 17:15:46 [INFO] Processing chunk 3/15
+2025-10-16 17:16:03 [INFO] Successfully extracted data from chunk 3
+2025-10-16 17:16:10 [INFO] Processing chunk 4/15
+2025-10-16 17:16:23 [INFO] Successfully extracted data from chunk 4
+2025-10-16 17:16:30 [INFO] Processing chunk 5/15
+2025-10-16 17:16:45 [INFO] Successfully extracted data from chunk 5
+2025-10-16 17:16:52 [INFO] Processing chunk 6/15
+2025-10-16 17:17:01 [INFO] Successfully extracted data from chunk 6
+2025-10-16 17:17:08 [INFO] Processing chunk 7/15
+2025-10-16 17:17:27 [INFO] Successfully extracted data from chunk 7
+2025-10-16 17:17:34 [INFO] Processing chunk 8/15
+2025-10-16 17:18:34 [INFO] Successfully extracted data from chunk 8
+2025-10-16 17:18:41 [INFO] Processing chunk 9/15
+2025-10-16 17:18:54 [INFO] Successfully extracted data from chunk 9
+2025-10-16 17:19:01 [INFO] Processing chunk 10/15
+2025-10-16 17:19:23 [INFO] Successfully extracted data from chunk 10
+2025-10-16 17:19:30 [INFO] Processing chunk 11/15
+2025-10-16 17:19:41 [INFO] Successfully extracted data from chunk 11
+2025-10-16 17:19:48 [INFO] Processing chunk 12/15
+2025-10-16 17:20:18 [INFO] Successfully extracted data from chunk 12
+2025-10-16 17:20:25 [INFO] Processing chunk 13/15
+2025-10-16 17:20:32 [INFO] Successfully extracted data from chunk 13
+2025-10-16 17:20:39 [INFO] Processing chunk 14/15
+2025-10-16 17:20:46 [INFO] Successfully extracted data from chunk 14
+2025-10-16 17:20:53 [INFO] Processing chunk 15/15
+2025-10-16 17:20:57 [INFO] Successfully extracted data from chunk 15
+2025-10-16 17:21:04 [INFO] Completed processing 15 chunks
+2025-10-16 17:21:04 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 17:21:16 [INFO] Generated embeddings for 103 entities and 158 relationships
+2025-10-16 17:21:16 [INFO] Merged graph: 103 entities, 158 relationships
+2025-10-16 17:21:16 [INFO] ✅ Knowledge graph complete: {'num_entities': 103, 'num_relationships': 158, 'entity_types': {'Model': 3, 'Mechanism': 1, 'Metric': 1, 'Task': 4, 'Person': 8, 'mechanism': 1, 'model architecture': 2, 'model component': 2, 'attention mechanism': 4, 'feed-forward network': 1, 'connection type': 1, 'normalization technique': 1, 'mathematical operation': 2, 'mathematical function': 1, 'neural network architecture': 1, 'Attention type': 3, 'Network type': 1, 'Technique': 4, 'Layer Type': 3, 'process': 2, 'layer': 3, 'data': 2, 'dataset': 2, 'hardware': 1, 'optimizer': 1, 'Machine Translation Model': 7, 'Machine Translation Model Ensemble': 3, 'model': 1, 'component': 3, 'Machine Learning Model': 1, 'Dataset': 2, 'Research Paper': 7, 'Concept': 2, 'Data': 2, 'Field of Study': 1, 'Model Architecture': 4, 'Model Component': 4, 'Training Technique': 1, 'System': 1, 'Algorithm': 1, 'AI model': 1, 'word': 2, 'neural network layer': 1, 'attention head': 2, 'linguistic term': 1, 'transformer layer': 1}, 'relationship_types': {'USES': 21, 'COMPARED_TO': 56, 'OUTPERFORMS': 1, 'APPLIED_TO': 4, 'USED_IN': 16, 'COMPONENT': 7, 'TECHNIQUE_USED_IN': 7, 'CONTAINS': 3, 'DEVELOPED': 8, 'REPLACES': 2, 'FOCUSES_ON': 1, 'CAPTURES': 1, 'RESOLVES': 2, 'COMPONENT_OF': 5, 'EVALUATED_BY': 1, 'IS_A': 5, 'IMPLEMENTS': 1, 'EXAMPLE_OF': 1, 'ALTERNATIVE_TO': 2, 'EVALUATED_ON': 1, 'IS_AN_EXAMPLE_OF': 1, 'TYPE_OF': 1, 'COMPLEXITY_EQUIVALENT': 1, 'RESOURCE_FOR': 1, 'TRAINED_BY': 1, 'BASED_ON': 1, 'PART_OF': 1, 'TASK_IN': 1, 'SUBFIELD_OF': 1, 'BENCHMARKED_ON': 1, 'ALGORITHM_USED_IN': 1, 'SUBJECT_OF': 1, 'PRODUCES': 1}, 'avg_degree': 3.0980392156862746, 'max_degree': 46, 'isolated_entities': 1}
+2025-10-16 17:21:16 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 17:21:17 [INFO] Created unique constraint on Entity.name
+2025-10-16 17:21:17 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 17:21:17 [INFO] Adding 103 unique entities...
+2025-10-16 17:21:24 [INFO] Adding 158 relationships...
+2025-10-16 17:21:37 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 17:21:37 [INFO] ✅ Neo4j population complete
+2025-10-16 17:21:37 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 17:21:37 [INFO] Received 15 chunks for vector store population.
+2025-10-16 17:21:37 [INFO] ✅ Chunk filtering complete: 15 valid chunks, 0 filtered out
+2025-10-16 17:21:37 [INFO] Generating embeddings for 15 documents...
+2025-10-16 17:21:39 [INFO] Attempting to upsert 15 points to Qdrant...
+2025-10-16 17:21:39 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 17:21:39 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 17:21:39 [INFO] ✅ Upsert operation completed for 15 points.
+2025-10-16 17:21:40 [INFO] ✅ Verified: 15 vectors successfully stored in Qdrant!
+2025-10-16 17:23:18 [INFO] Generated retrieval plan: {'core_query': 'Transformer', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'The user query does not contain any filter conditions; only a semantic query is needed, so a vector search alone is sufficient.'}
+2025-10-16 17:23:24 [INFO] Fused 1 result lists into 5 documents using RRF.
+2025-10-16 17:23:26 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:23:49 [INFO] Ontology loaded with 103 entities and 158 relationships
+2025-10-16 17:24:54 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:26:11 [INFO] Switched to ontology version: v1.0
+2025-10-16 17:26:13 [INFO] Ontology loaded with 103 entities and 158 relationships
+2025-10-16 17:38:51 [INFO] Shutting down database connections...
+2025-10-16 17:38:51 [INFO] Disconnected from Neo4j database
+2025-10-16 17:39:24 [INFO] Logging system initialized
+2025-10-16 17:39:24 [INFO] Initializing database connections...
+2025-10-16 17:39:24 [INFO] Created neo4j graph adapter
+2025-10-16 17:39:24 [INFO] Registered graph database adapter: neo4j
+2025-10-16 17:39:24 [INFO] Set active graph adapter to: neo4j
+2025-10-16 17:39:25 [INFO] Successfully connected to Neo4j database
+2025-10-16 17:39:35 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 17:39:35 [INFO] Created qdrant vector adapter
+2025-10-16 17:39:35 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 17:40:02 [INFO] Environment variables loaded successfully
+2025-10-16 17:40:59 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760616658_Rohith_Resume.pdf
+2025-10-16 17:40:59 [INFO] Environment variables loaded successfully
+2025-10-16 17:40:59 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 17:41:07 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 17:41:07 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 17:41:07 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760616658_Rohith_Resume.pdf
+2025-10-16 17:41:17 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:41:17 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 17:41:17 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:41:17 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 17:41:17 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 17:41:17 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 17:41:17 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 17:41:17 [INFO] Processing chunk 1/2
+2025-10-16 17:41:19 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 17:41:26 [INFO] Processing chunk 2/2
+2025-10-16 17:41:28 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 17:41:35 [INFO] Successfully contextualized 2 chunks
+2025-10-16 17:41:35 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 17:41:35 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 17:41:35 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 17:41:35 [INFO] Processing chunk 1/2
+2025-10-16 17:41:58 [INFO] Successfully extracted data from chunk 1
+2025-10-16 17:42:05 [INFO] Processing chunk 2/2
+2025-10-16 17:42:13 [INFO] Successfully extracted data from chunk 2
+2025-10-16 17:42:20 [INFO] Completed processing 2 chunks
+2025-10-16 17:42:20 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 17:42:21 [INFO] Generated embeddings for 13 entities and 11 relationships
+2025-10-16 17:42:21 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 17:42:21 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 2, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'RECEIVED_CERTIFICATE_FROM': 1, 'DEVELOPED': 4, 'PARTICIPATED_IN': 1, 'ATTENDED': 3, 'COMPLETED_INTERNSHIP': 1, 'PARTICIPATED_IN_EVENT': 1}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 17:42:21 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 17:42:21 [INFO] Created unique constraint on Entity.name
+2025-10-16 17:42:21 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 17:42:21 [INFO] Adding 13 unique entities...
+2025-10-16 17:42:22 [INFO] Adding 11 relationships...
+2025-10-16 17:42:23 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 17:42:23 [INFO] ✅ Neo4j population complete
+2025-10-16 17:42:23 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 17:42:23 [INFO] Received 2 chunks for vector store population.
+2025-10-16 17:42:23 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 17:42:23 [INFO] Generating embeddings for 2 documents...
+2025-10-16 17:42:23 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 17:42:23 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 17:42:23 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 17:42:23 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 17:42:24 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 17:42:45 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 17:42:57 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:43:49 [INFO] Switched to ontology version: v1.0
+2025-10-16 17:43:51 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 17:44:01 [INFO] Created new ontology version: v1.1
+2025-10-16 17:47:49 [INFO] Shutting down database connections...
+2025-10-16 17:47:49 [INFO] Disconnected from Neo4j database
+2025-10-16 17:54:29 [INFO] Logging system initialized
+2025-10-16 17:54:29 [INFO] Initializing database connections...
+2025-10-16 17:54:29 [INFO] Created neo4j graph adapter
+2025-10-16 17:54:29 [INFO] Registered graph database adapter: neo4j
+2025-10-16 17:54:29 [INFO] Set active graph adapter to: neo4j
+2025-10-16 17:54:30 [INFO] Successfully connected to Neo4j database
+2025-10-16 17:54:39 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 17:54:39 [INFO] Created qdrant vector adapter
+2025-10-16 17:54:39 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 17:55:04 [INFO] Environment variables loaded successfully
+2025-10-16 17:55:57 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760617556_Rohith_Resume.pdf
+2025-10-16 17:55:57 [INFO] Environment variables loaded successfully
+2025-10-16 17:55:57 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 17:56:05 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 17:56:05 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 17:56:05 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760617556_Rohith_Resume.pdf
+2025-10-16 17:56:16 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:56:16 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 17:56:16 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 17:56:16 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 17:56:16 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 17:56:16 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 17:56:16 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 17:56:16 [INFO] Processing chunk 1/2
+2025-10-16 17:56:18 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 17:56:25 [INFO] Processing chunk 2/2
+2025-10-16 17:56:27 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 17:56:34 [INFO] Successfully contextualized 2 chunks
+2025-10-16 17:56:34 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 17:56:34 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 17:56:34 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 17:56:34 [INFO] Processing chunk 1/2
+2025-10-16 17:56:59 [INFO] Successfully extracted data from chunk 1
+2025-10-16 17:57:06 [INFO] Processing chunk 2/2
+2025-10-16 17:57:14 [INFO] Successfully extracted data from chunk 2
+2025-10-16 17:57:21 [INFO] Completed processing 2 chunks
+2025-10-16 17:57:21 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 17:57:22 [INFO] Generated embeddings for 13 entities and 11 relationships
+2025-10-16 17:57:22 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 17:57:22 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 2, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'PARTICIPATED_IN_EVENT': 1, 'DEVELOPED': 4, 'RECEIVED_CERTIFICATE_FROM': 1, 'COMPLETED_INTERNSHIP': 1, 'PARTICIPATED_IN': 1, 'ATTENDED': 3}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 17:57:22 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 17:57:23 [INFO] Created unique constraint on Entity.name
+2025-10-16 17:57:23 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 17:57:23 [INFO] Adding 13 unique entities...
+2025-10-16 17:57:24 [INFO] Adding 11 relationships...
+2025-10-16 17:57:25 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 17:57:25 [INFO] ✅ Neo4j population complete
+2025-10-16 17:57:25 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 17:57:25 [INFO] Received 2 chunks for vector store population.
+2025-10-16 17:57:25 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 17:57:25 [INFO] Generating embeddings for 2 documents...
+2025-10-16 17:57:25 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 17:57:25 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 17:57:25 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 17:57:25 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 17:57:26 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 17:57:56 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 17:58:06 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:01:11 [INFO] Shutting down database connections...
+2025-10-16 18:01:11 [INFO] Disconnected from Neo4j database
+2025-10-16 18:10:27 [INFO] Logging system initialized
+2025-10-16 18:10:27 [INFO] Initializing database connections...
+2025-10-16 18:10:27 [INFO] Created neo4j graph adapter
+2025-10-16 18:10:27 [INFO] Registered graph database adapter: neo4j
+2025-10-16 18:10:27 [INFO] Set active graph adapter to: neo4j
+2025-10-16 18:10:28 [INFO] Successfully connected to Neo4j database
+2025-10-16 18:10:38 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 18:10:38 [INFO] Created qdrant vector adapter
+2025-10-16 18:10:38 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 18:11:07 [INFO] Environment variables loaded successfully
+2025-10-16 18:12:18 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760618529_Rohith_Resume.pdf
+2025-10-16 18:12:19 [INFO] Environment variables loaded successfully
+2025-10-16 18:12:19 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 18:12:27 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 18:12:27 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 18:12:27 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760618529_Rohith_Resume.pdf
+2025-10-16 18:12:39 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:12:39 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 18:12:39 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:12:39 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 18:12:39 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 18:12:39 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 18:12:39 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 18:12:39 [INFO] Processing chunk 1/2
+2025-10-16 18:12:42 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 18:12:49 [INFO] Processing chunk 2/2
+2025-10-16 18:12:50 [INFO] Completed chunk 2: Panchangam Rohith has achieved notable success in ...
+2025-10-16 18:12:57 [INFO] Successfully contextualized 2 chunks
+2025-10-16 18:12:57 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 18:12:57 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 18:12:57 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 18:12:57 [INFO] Processing chunk 1/2
+2025-10-16 18:13:26 [INFO] Successfully extracted data from chunk 1
+2025-10-16 18:13:33 [INFO] Processing chunk 2/2
+2025-10-16 18:13:42 [INFO] Successfully extracted data from chunk 2
+2025-10-16 18:13:49 [INFO] Completed processing 2 chunks
+2025-10-16 18:13:49 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 18:13:50 [INFO] Generated embeddings for 12 entities and 11 relationships
+2025-10-16 18:13:50 [INFO] Merged graph: 12 entities, 11 relationships
+2025-10-16 18:13:50 [INFO] ✅ Knowledge graph complete: {'num_entities': 12, 'num_relationships': 11, 'entity_types': {'Person': 1, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'RECEIVED_CERTIFICATE_FROM': 1, 'ATTENDED': 3, 'COMPLETED_INTERNSHIP': 1, 'DEVELOPED': 4, 'PARTICIPATED_IN': 1, 'PARTICIPATED_IN_EVENT': 1}, 'avg_degree': 1.8333333333333333, 'max_degree': 11, 'isolated_entities': 0}
+2025-10-16 18:13:50 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 18:13:50 [INFO] Created unique constraint on Entity.name
+2025-10-16 18:13:50 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 18:13:50 [INFO] Adding 12 unique entities...
+2025-10-16 18:13:51 [INFO] Adding 11 relationships...
+2025-10-16 18:13:52 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 18:13:52 [INFO] ✅ Neo4j population complete
+2025-10-16 18:13:52 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 18:13:52 [INFO] Received 2 chunks for vector store population.
+2025-10-16 18:13:52 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 18:13:52 [INFO] Generating embeddings for 2 documents...
+2025-10-16 18:13:53 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 18:13:53 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 18:13:53 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 18:13:53 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 18:13:54 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 18:14:08 [INFO] Ontology loaded with 12 entities and 11 relationships
+2025-10-16 18:14:25 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:14:45 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:29:03 [INFO] Shutting down database connections...
+2025-10-16 18:29:03 [INFO] Disconnected from Neo4j database
+2025-10-16 18:29:36 [INFO] Logging system initialized
+2025-10-16 18:29:36 [INFO] Initializing database connections...
+2025-10-16 18:29:36 [INFO] Created neo4j graph adapter
+2025-10-16 18:29:36 [INFO] Registered graph database adapter: neo4j
+2025-10-16 18:29:36 [INFO] Set active graph adapter to: neo4j
+2025-10-16 18:29:37 [INFO] Successfully connected to Neo4j database
+2025-10-16 18:29:47 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 18:29:47 [INFO] Created qdrant vector adapter
+2025-10-16 18:29:47 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 18:30:19 [INFO] Environment variables loaded successfully
+2025-10-16 18:30:59 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760619659_Rohith_Resume.pdf
+2025-10-16 18:30:59 [INFO] Environment variables loaded successfully
+2025-10-16 18:30:59 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 18:31:07 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 18:31:07 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 18:31:07 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760619659_Rohith_Resume.pdf
+2025-10-16 18:31:16 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:31:16 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 18:31:16 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:31:16 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 18:31:16 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 18:31:16 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 18:31:16 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 18:31:16 [INFO] Processing chunk 1/2
+2025-10-16 18:31:19 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 18:31:26 [INFO] Processing chunk 2/2
+2025-10-16 18:31:27 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 18:31:34 [INFO] Successfully contextualized 2 chunks
+2025-10-16 18:31:34 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 18:31:34 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 18:31:34 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 18:31:34 [INFO] Processing chunk 1/2
+2025-10-16 18:31:56 [INFO] Successfully extracted data from chunk 1
+2025-10-16 18:32:03 [INFO] Processing chunk 2/2
+2025-10-16 18:32:11 [INFO] Successfully extracted data from chunk 2
+2025-10-16 18:32:18 [INFO] Completed processing 2 chunks
+2025-10-16 18:32:18 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 18:32:19 [INFO] Generated embeddings for 13 entities and 11 relationships
+2025-10-16 18:32:19 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 18:32:19 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 1, 'Project': 4, 'Education': 3, 'person': 1, 'university': 1, 'competition': 1, 'internship': 1, 'hackathon': 1}, 'relationship_types': {'DEVELOPED': 4, 'COMPLETED': 1, 'ATTENDED': 1, 'STUDIED': 3, 'PARTICIPATED_IN': 2}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 18:32:19 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 18:32:20 [INFO] Created unique constraint on Entity.name
+2025-10-16 18:32:20 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 18:32:20 [INFO] Adding 13 unique entities...
+2025-10-16 18:32:20 [INFO] Adding 11 relationships...
+2025-10-16 18:32:21 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 18:32:21 [INFO] ✅ Neo4j population complete
+2025-10-16 18:32:21 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 18:32:21 [INFO] Received 2 chunks for vector store population.
+2025-10-16 18:32:21 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 18:32:21 [INFO] Generating embeddings for 2 documents...
+2025-10-16 18:32:22 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 18:32:22 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 18:32:22 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 18:32:22 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 18:32:23 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 18:33:13 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 18:33:22 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:33:29 [INFO] Created new ontology version: v1.1
+2025-10-16 18:38:40 [INFO] Shutting down database connections...
+2025-10-16 18:38:40 [INFO] Disconnected from Neo4j database
+2025-10-16 18:41:43 [INFO] Logging system initialized
+2025-10-16 18:41:43 [INFO] Initializing database connections...
+2025-10-16 18:41:43 [INFO] Created neo4j graph adapter
+2025-10-16 18:41:43 [INFO] Registered graph database adapter: neo4j
+2025-10-16 18:41:43 [INFO] Set active graph adapter to: neo4j
+2025-10-16 18:41:44 [INFO] Successfully connected to Neo4j database
+2025-10-16 18:41:54 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 18:41:54 [INFO] Created qdrant vector adapter
+2025-10-16 18:41:54 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 18:42:17 [INFO] Environment variables loaded successfully
+2025-10-16 18:45:04 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760620504_Rohith_Resume.pdf
+2025-10-16 18:45:04 [INFO] Environment variables loaded successfully
+2025-10-16 18:45:04 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 18:45:12 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 18:45:12 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 18:45:12 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760620504_Rohith_Resume.pdf
+2025-10-16 18:45:27 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:45:27 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 18:45:27 [WARNING] Failed to track pipeline step with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:45:27 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 18:45:27 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 18:45:27 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 18:45:27 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 18:45:27 [INFO] Processing chunk 1/2
+2025-10-16 18:45:29 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 18:45:36 [INFO] Processing chunk 2/2
+2025-10-16 18:45:37 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 18:45:44 [INFO] Successfully contextualized 2 chunks
+2025-10-16 18:45:44 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 18:45:44 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 18:45:44 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 18:45:44 [INFO] Processing chunk 1/2
+2025-10-16 18:46:07 [INFO] Successfully extracted data from chunk 1
+2025-10-16 18:46:14 [INFO] Processing chunk 2/2
+2025-10-16 18:46:22 [INFO] Successfully extracted data from chunk 2
+2025-10-16 18:46:29 [INFO] Completed processing 2 chunks
+2025-10-16 18:46:29 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 18:46:30 [INFO] Generated embeddings for 13 entities and 11 relationships
+2025-10-16 18:46:30 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 18:46:30 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 2, 'Project': 4, 'Education': 3, 'University': 1, 'Competition': 1, 'Internship': 1, 'Hackathon': 1}, 'relationship_types': {'DEVELOPED': 4, 'RECEIVED_CERTIFICATE_FROM': 1, 'ATTENDED': 3, 'PARTICIPATED_IN': 1, 'COMPLETED_INTERNSHIP': 1, 'PARTICIPATED_IN_EVENT': 1}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 18:46:30 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 18:46:30 [INFO] Created unique constraint on Entity.name
+2025-10-16 18:46:30 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 18:46:30 [INFO] Adding 13 unique entities...
+2025-10-16 18:46:31 [INFO] Adding 11 relationships...
+2025-10-16 18:46:31 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 18:46:31 [INFO] ✅ Neo4j population complete
+2025-10-16 18:46:31 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 18:46:31 [INFO] Received 2 chunks for vector store population.
+2025-10-16 18:46:31 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 18:46:31 [INFO] Generating embeddings for 2 documents...
+2025-10-16 18:46:32 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 18:46:32 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 18:46:32 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 18:46:32 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 18:46:33 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 18:47:04 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 18:47:12 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:47:26 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:49:08 [INFO] Generated retrieval plan: {'core_query': 'summarise pdf', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'The user wants a summary of a PDF without specifying any filter criteria; a semantic vector search is sufficient.'}
+2025-10-16 18:49:11 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 18:49:12 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:50:48 [INFO] Generated retrieval plan: {'core_query': 'transformer', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'The user is asking for a general explanation of the term, with no filtering requirements, so a simple semantic vector search is appropriate.'}
+2025-10-16 18:50:55 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 18:50:56 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:51:39 [INFO] Switched to ontology version: v1.0
+2025-10-16 18:51:42 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 18:53:15 [INFO] Generated retrieval plan: {'core_query': 'explain Transformer architecture', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'The query is purely about explanation; no filters are present.'}
+2025-10-16 18:53:31 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 18:53:33 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:54:03 [INFO] Generated retrieval plan: {'core_query': 'pdf summary', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'The user wants a summary of a PDF, which is a general semantic request. No explicit filter conditions are specified, so a straightforward vector search is sufficient.'}
+2025-10-16 18:54:06 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 18:54:07 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:54:30 [INFO] Generated retrieval plan: {'core_query': 'relation between certificates and projects', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'No explicit filter conditions were identified. The user is asking for the relationship, best addressed via a vector search.'}
+2025-10-16 18:54:38 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 18:54:38 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:55:17 [INFO] Generated retrieval plan: {'core_query': 'projects Nomic used', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'The user asks for projects using Nomic; no explicit filter criteria were provided, so a semantic vector search alone suffices.'}
+2025-10-16 18:55:23 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 18:55:24 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 18:56:11 [INFO] Generated retrieval plan: {'core_query': 'developed projects', 'tools': ['search_vector'], 'filters': {}, 'reasoning': 'User wants a list of projects, no specific filters. A semantic vector search will retrieve relevant project documents.'}
+2025-10-16 18:56:22 [INFO] Fused 1 result lists into 2 documents using RRF.
+2025-10-16 18:56:23 [WARNING] Failed to track LLM call with Opik: 'function' object does not support the context manager protocol
+2025-10-16 19:10:14 [INFO] Shutting down database connections...
+2025-10-16 19:10:14 [INFO] Disconnected from Neo4j database
+2025-10-16 19:19:05 [INFO] Logging system initialized
+2025-10-16 19:19:05 [INFO] Initializing database connections...
+2025-10-16 19:19:05 [INFO] Created neo4j graph adapter
+2025-10-16 19:19:05 [INFO] Registered graph database adapter: neo4j
+2025-10-16 19:19:05 [INFO] Set active graph adapter to: neo4j
+2025-10-16 19:19:06 [INFO] Successfully connected to Neo4j database
+2025-10-16 19:19:16 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 19:19:16 [INFO] Created qdrant vector adapter
+2025-10-16 19:19:16 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 19:19:46 [INFO] Environment variables loaded successfully
+2025-10-16 19:43:41 [INFO] Shutting down database connections...
+2025-10-16 19:43:41 [INFO] Disconnected from Neo4j database
+2025-10-16 19:46:32 [INFO] Logging system initialized
+2025-10-16 19:46:32 [INFO] Initializing database connections...
+2025-10-16 19:46:32 [INFO] Created neo4j graph adapter
+2025-10-16 19:46:32 [INFO] Registered graph database adapter: neo4j
+2025-10-16 19:46:32 [INFO] Set active graph adapter to: neo4j
+2025-10-16 19:46:33 [INFO] Successfully connected to Neo4j database
+2025-10-16 19:46:44 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 19:46:44 [INFO] Created qdrant vector adapter
+2025-10-16 19:46:44 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 19:47:39 [INFO] Environment variables loaded successfully
+2025-10-16 19:51:14 [INFO] PDF saved to: E:\Projects\Multi_Agent\lyzr_challenge\data\1760624470_Rohith_Resume.pdf
+2025-10-16 19:51:14 [INFO] Environment variables loaded successfully
+2025-10-16 19:51:14 [INFO] PDF Parser initialized with LlamaParse
+2025-10-16 19:51:22 [INFO] 🚀 Starting Lyzr RAG Pipeline
+2025-10-16 19:51:22 [INFO] === Step 1: PDF Parsing ===
+2025-10-16 19:51:22 [INFO] Parsing PDF: E:\Projects\Multi_Agent\lyzr_challenge\data\1760624470_Rohith_Resume.pdf
+2025-10-16 19:51:32 [WARNING] Failed to track LLM call with Opik: BaseTrackDecorator.track() got an unexpected keyword argument 'input'
+2025-10-16 19:51:32 [INFO] Successfully parsed PDF into 2 documents
+2025-10-16 19:51:32 [WARNING] Failed to track pipeline step with Opik: BaseTrackDecorator.track() got an unexpected keyword argument 'input'
+2025-10-16 19:51:32 [INFO] Extracted 2 nodes from 2 documents
+2025-10-16 19:51:32 [INFO] Sample node structure: ['id_', 'text', 'metadata', 'embedding']
+2025-10-16 19:51:32 [INFO] ✅ PDF parsing complete: 2 documents, 2 nodes
+2025-10-16 19:51:32 [INFO] === Step 2: Contextual Retrieval ===
+2025-10-16 19:51:32 [INFO] Processing chunk 1/2
+2025-10-16 19:51:34 [INFO] Completed chunk 1: Panchangam Rohith is a skilled computer science pr...
+2025-10-16 19:51:41 [INFO] Processing chunk 2/2
+2025-10-16 19:51:42 [INFO] Completed chunk 2: Rohith Panchangam has achieved notable success in ...
+2025-10-16 19:51:49 [INFO] Successfully contextualized 2 chunks
+2025-10-16 19:51:49 [INFO] Contextualized chunks saved to contextualized_chunks.json
+2025-10-16 19:51:49 [INFO] ✅ Contextualization complete: 2 chunks
+2025-10-16 19:51:49 [INFO] === Step 3: Knowledge Graph Extraction ===
+2025-10-16 19:51:49 [INFO] Processing chunk 1/2
+2025-10-16 19:52:15 [INFO] Successfully extracted data from chunk 1
+2025-10-16 19:52:22 [INFO] Processing chunk 2/2
+2025-10-16 19:52:30 [INFO] Successfully extracted data from chunk 2
+2025-10-16 19:52:37 [INFO] Completed processing 2 chunks
+2025-10-16 19:52:37 [INFO] Generating embeddings for vector similarity search (Qdrant)...
+2025-10-16 19:52:38 [INFO] Generated embeddings for 13 entities and 11 relationships
+2025-10-16 19:52:38 [INFO] Merged graph: 13 entities, 11 relationships
+2025-10-16 19:52:38 [INFO] ✅ Knowledge graph complete: {'num_entities': 13, 'num_relationships': 11, 'entity_types': {'Person': 1, 'Project': 4, 'Education': 3, 'person': 1, 'university': 1, 'competition': 1, 'internship': 1, 'hackathon': 1}, 'relationship_types': {'ATTENDED': 4, 'DEVELOPED': 4, 'PARTICIPATED_IN': 2, 'COMPLETED': 1}, 'avg_degree': 1.6923076923076923, 'max_degree': 7, 'isolated_entities': 0}
+2025-10-16 19:52:38 [INFO] === Step 4: Neo4j Population ===
+2025-10-16 19:52:39 [INFO] Created unique constraint on Entity.name
+2025-10-16 19:52:39 [INFO] Received notification from DBMS server: <GqlStatusObject gql_status='00NA0', status_description="note: successful completion - index or constraint already exists. The command 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' has no effect. The index or constraint specified by 'CONSTRAINT constraint_5adcbbfe FOR (e:Entity) REQUIRE (e.name) IS UNIQUE' already exists.", position=None, raw_classification='SCHEMA', classification=<NotificationClassification.SCHEMA: 'SCHEMA'>, raw_severity='INFORMATION', severity=<NotificationSeverity.INFORMATION: 'INFORMATION'>, diagnostic_record={'_classification': 'SCHEMA', '_severity': 'INFORMATION', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'CREATE CONSTRAINT IF NOT EXISTS FOR (e:Entity) REQUIRE e.name IS UNIQUE'
+2025-10-16 19:52:39 [INFO] Adding 13 unique entities...
+2025-10-16 19:52:40 [INFO] Adding 11 relationships...
+2025-10-16 19:52:40 [INFO] Successfully populated Neo4j with knowledge graph
+2025-10-16 19:52:40 [INFO] ✅ Neo4j population complete
+2025-10-16 19:52:40 [INFO] === Step 5: Vector Store Population ===
+2025-10-16 19:52:40 [INFO] Received 2 chunks for vector store population.
+2025-10-16 19:52:40 [INFO] ✅ Chunk filtering complete: 2 valid chunks, 0 filtered out
+2025-10-16 19:52:40 [INFO] Generating embeddings for 2 documents...
+2025-10-16 19:52:41 [INFO] Attempting to upsert 2 points to Qdrant...
+2025-10-16 19:52:41 [INFO] Qdrant collection 'RAG_Marketing' not found. Creating it...
+2025-10-16 19:52:41 [INFO] Successfully created Qdrant collection: RAG_Marketing
+2025-10-16 19:52:41 [INFO] ✅ Upsert operation completed for 2 points.
+2025-10-16 19:52:42 [INFO] ✅ Verified: 2 vectors successfully stored in Qdrant!
+2025-10-16 19:53:43 [INFO] Ontology loaded with 13 entities and 11 relationships
+2025-10-16 19:54:02 [WARNING] Failed to track LLM call with Opik: BaseTrackDecorator.track() got an unexpected keyword argument 'input'
+2025-10-16 19:54:05 [WARNING] Failed to track LLM call with Opik: BaseTrackDecorator.track() got an unexpected keyword argument 'input'
+2025-10-16 19:54:25 [WARNING] Failed to track LLM call with Opik: BaseTrackDecorator.track() got an unexpected keyword argument 'input'
+2025-10-16 19:54:49 [WARNING] Failed to track LLM call with Opik: BaseTrackDecorator.track() got an unexpected keyword argument 'input'
+2025-10-16 19:55:35 [INFO] Created new ontology version: v1.1
+2025-10-16 20:28:21 [INFO] Shutting down database connections...
+2025-10-16 20:28:22 [INFO] Disconnected from Neo4j database
+2025-10-16 20:32:51 [INFO] Logging system initialized
+2025-10-16 20:32:51 [INFO] Initializing database connections...
+2025-10-16 20:32:51 [INFO] Created neo4j graph adapter
+2025-10-16 20:32:51 [INFO] Registered graph database adapter: neo4j
+2025-10-16 20:32:51 [INFO] Set active graph adapter to: neo4j
+2025-10-16 20:32:52 [INFO] Successfully connected to Neo4j database
+2025-10-16 20:33:02 [WARNING] Could not connect to remote Qdrant: [WinError 10061] No connection could be made because the target machine actively refused it. Falling back to in-memory instance.
+2025-10-16 20:33:02 [INFO] Created qdrant vector adapter
+2025-10-16 20:33:02 [INFO] Successfully connected Qdrant adapter to global client.
+2025-10-16 20:33:36 [INFO] Environment variables loaded successfully
