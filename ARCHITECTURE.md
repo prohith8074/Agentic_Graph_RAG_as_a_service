@@ -26,10 +26,95 @@ The **Lyzr Challenge RAG System** is a sophisticated **Retrieval-Augmented Gener
 - **Version Control**: Ontology versioning with rollback capabilities.
 - **REST API**: Complete API interface with streaming support.
 
-## System Architecture
+# 🏗️ Architecture
 
-### High-Level Architecture
+The system is designed with a modular, multi-layer architecture that separates concerns from data ingestion to user interaction.
 
+```mermaid
+graph LR
+  %% ==== STYLE DEFINITIONS ====
+  classDef user fill:#f9f5ff,stroke:#b38cff,stroke-width:2px,color:#3d0073;
+  classDef etl fill:#fff8ef,stroke:#f2b279,stroke-width:2px,color:#4b2900;
+  classDef db fill:#fff4f4,stroke:#ff9e9e,stroke-width:2px,color:#5a0000;
+  classDef agent fill:#edf4ff,stroke:#6da8ff,stroke-width:2px,color:#002d80;
+  classDef ret fill:#f2fbf9,stroke:#7dd3b0,stroke-width:1px,color:#003d33;
+  classDef obs fill:#fff0f6,stroke:#f2a6c9,stroke-width:1px,color:#660033;
+
+  %% ==== TITLE ====
+  subgraph TITLE[" "]
+    style TITLE fill:transparent,stroke:transparent
+    T["Agentic Graph RAG — Clean Flow"]
+    style T fill:transparent,stroke:transparent,color:#000,font-size:24px,font-weight:bold
+  end
+
+  %% ==== MAIN PHASES ====
+  subgraph INGESTION ["Phase 1: Document Ingestion"]
+    direction TD
+    UDoc["📄 User Document"]:::user
+    ETL1["1. Parse Document"]:::etl
+    ETL2["2. Contextualize & Enrich"]:::etl
+    ETL3["3. Extract Entities & Relations"]:::etl
+    ETL4["4. Build Knowledge Graph"]:::etl
+    ETL5["5. Create Text Embeddings"]:::etl
+
+    UDoc --> ETL1 --> ETL2
+    ETL2 --> ETL3 --> ETL4
+    ETL2 --> ETL5
+  end
+
+  subgraph DATABASES ["Phase 2: Unified Data Storage"]
+    direction TD
+    DBGraph["🕸️ Knowledge Graph DB<br/>(Neo4j)"]:::db
+    DBVector["📦 Vector DB<br/>(Qdrant)"]:::db
+  end
+
+  subgraph QUERYING ["Phase 3: Query & Response"]
+    direction TD
+    UQuery["🧠 User Query / Response"]:::user
+    Router["⚙️ Query Router"]:::agent
+    Redis["⚡ Short-Term Memory<br/>(Redis)"]:::db
+    Retrieval["🔍 Retrieval Tools"]:::ret
+    Fusion["🔀 Hybrid Scorer"]:::ret
+    Synth["🤖 Response Generator"]:::ret
+
+    UQuery -- "Query" --> Router
+    Router <--> Redis
+    Router --> Retrieval --> Fusion --> Synth
+    Synth -- "Final Answer" --> UQuery
+  end
+
+  %% ==== OBSERVABILITY & MANAGEMENT ====
+  subgraph MANAGEMENT ["Observability & Management"]
+      direction TD
+      Opik["📊 LLM Tracer<br/>(Opik)"]:::obs
+      Ontology["🧩 Ontology Editor<br/>(Gradio)"]:::obs
+      Versioning["🕰️ Versioning<br/>(Gradio)"]:::obs
+      Download["📥 Download<br/>(Gradio)"]:::obs
+  end
+
+
+  %% ==== CONNECTIONS BETWEEN PHASES ====
+  ETL4 --> DBGraph
+  ETL5 --> DBVector
+  Retrieval -.-> DBGraph
+  Retrieval -.-> DBVector
+
+  %% ==== MANAGEMENT CONNECTIONS ====
+  MANAGEMENT -.-> INGESTION
+  MANAGEMENT -.-> QUERYING
+
+end
+```
+
+## New Features
+
+### Ontology Versioning
+
+The ontology editor now supports versioning. Every time a change is applied to the ontology, a new version is created. This allows users to track the evolution of the ontology and to revert to previous versions if needed.
+
+### Download Graph
+
+Users can now download the current ontology as a JSON file. This is useful for backing up the ontology, for sharing it with others, or for using it in other applications.
 
 ### Component Architecture Breakdown
 
@@ -144,7 +229,6 @@ cp .env.example .env
 # Edit .env with your API keys
 nano .env
 ```
-
 Required environment variables:
 ```env
 # API Keys
@@ -173,4 +257,5 @@ REDIS_PASSWORD='your_redis_passsword'
 ## Usage Guide
 
 Please see the `README.md` for a detailed usage guide, including commands for running the Gradio UI and the command-line interface.
+
 
