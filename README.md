@@ -21,7 +21,7 @@ This repository contains an extensible, production-grade platform that unifies k
 ## 🏗️ Architecture
 
 
-![Architecture Diagram](./architecture.png)
+![Architecture Diagram](./Architecture.png)
 
 
 
