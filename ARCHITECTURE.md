@@ -158,12 +158,19 @@ NEO4J_USER=neo4j
 NEO4J_PASSWORD=your_password
 
 # Qdrant Configuration (example for local, in-memory)
-QDRANT_LOCATION=":memory:"
-
+QDRANT_URL='Qdrant_url'
+QDRANT_API_KEY='your_api_key'
+QDRANT_COLLECTION_NAME='collection name'
 # Opik (Optional)
 OPIK_API_KEY=your_opik_key
+OPIK_PROJECT_NAME=''
+#Redis
+REDIS_HOST='your redis host url'
+REDIS_PORT='port number'
+REDIS_PASSWORD='your_redis_passsword'
 ```
 
 ## Usage Guide
 
 Please see the `README.md` for a detailed usage guide, including commands for running the Gradio UI and the command-line interface.
+
