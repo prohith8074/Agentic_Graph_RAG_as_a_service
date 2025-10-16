@@ -20,6 +20,11 @@ This repository contains an extensible, production-grade platform that unifies k
 
 ## 🏗️ Architecture
 
+
+![Architecture Diagram](./architecture.png)
+
+
+
 The system is designed with a modular, multi-layer architecture that separates concerns from data ingestion to user interaction.
 
 ## 🛠️ Technology Stack & Tooling Rationale
