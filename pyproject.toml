@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lyzr-challenge-rag"
+version = "0.1.0"
+description = "Agentic Graph RAG as a Service"
+authors = [{name = "Lyzr Challenge Team"}]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "python-dotenv>=1.0.0",
+    "cohere>=4.0.0",
+    "llama-index>=0.9.0",
+    "chromadb>=0.4.0",
+    "neo4j>=5.0.0",
+    "redis>=4.5.0",
+    "opik>=0.1.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "httpx>=0.24.0",
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=3.0.0",
+    "pytest-mock>=3.10.0"
+]
+neptune = [
+    "gremlinpython>=3.6.0"
+]
+
+[tool.setuptools]
+packages = ["lyzr_challenge"]
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = ["E203", "W503"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short --asyncio-mode=auto"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
