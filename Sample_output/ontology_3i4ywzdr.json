@@ -1,0 +1,1579 @@
+{
+  "entities": [
+    {
+      "name": "Transformer model",
+      "type": "Model",
+      "definition": "A neural network architecture for machine translation.",
+      "purpose": "Achieve state-of-the-art BLEU scores on English-to-German and English-to-French translation tasks.",
+      "mechanism": "self-attention",
+      "processing": "sequences",
+      "comparison": "outperforms most previous models, including RNN-based parsers",
+      "techniques": [
+        "residual dropout",
+        "label smoothing"
+      ],
+      "training_cost": "significantly less than previous models",
+      "performance": "strong",
+      "task": "English constituency parsing",
+      "tuning": "minimal task-specific tuning"
+    },
+    {
+      "name": "Attention mechanism",
+      "type": "Mechanism",
+      "definition": "A mechanism used in sequence transduction models to focus on specific parts of the input sequence.",
+      "purpose": "Improving machine translation performance.",
+      "function": "follows long-distance dependencies",
+      "example": "verb 'making' and its distant modifiers"
+    },
+    {
+      "name": "Recurrent neural networks",
+      "type": "Model",
+      "definition": "A type of neural network that is well-suited for processing sequential data in neural machine translation.",
+      "purpose": "Sequence modeling and transduction problems such as language modeling and machine translation."
+    },
+    {
+      "name": "Convolutional neural networks",
+      "type": "Model",
+      "definition": "A type of neural network that uses convolutions to process data.",
+      "purpose": "Sequence transduction tasks."
+    },
+    {
+      "name": "BLEU score",
+      "type": "Metric",
+      "definition": "A metric used to evaluate the quality of machine translation.",
+      "purpose": "Measuring translation accuracy."
+    },
+    {
+      "name": "WMT 2014 English-to-German translation task",
+      "type": "Task",
+      "definition": "A machine translation task from English to German.",
+      "purpose": "Evaluating translation models."
+    },
+    {
+      "name": "WMT 2014 English-to-French translation task",
+      "type": "Task",
+      "definition": "A machine translation task from English to French.",
+      "purpose": "Evaluating translation models."
+    },
+    {
+      "name": "English constituency parsing",
+      "type": "Task",
+      "definition": "A task in natural language processing that involves analyzing the syntactic structure of English sentences.",
+      "purpose": "Evaluating language models.",
+      "challenges": [
+        "output is subject to strong structural constraints",
+        "output is significantly longer than the input",
+        "RNN sequence-to-sequence models have not been able to attain state-of-the-art results in small-data regimes"
+      ],
+      "experiments": [
+        {
+          "model": "4-layer transformer",
+          "dmodel": "1024",
+          "training data": "Wall Street Journal (WSJ) portion of the Penn Treebank",
+          "vocabulary": "16K tokens"
+        },
+        {
+          "model": "4-layer transformer",
+          "dmodel": "1024",
+          "training data": "high-confidence and BerkleyParser corpora",
+          "vocabulary": "32K tokens"
+        }
+      ]
+    },
+    {
+      "name": "Ashish Vaswani",
+      "type": "Person",
+      "definition": "A researcher at Google Brain.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "Noam Shazeer",
+      "type": "Person",
+      "definition": "A researcher at Google Brain.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "Niki Parmar",
+      "type": "Person",
+      "definition": "A researcher at Google Research.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "Jakob Uszkoreit",
+      "type": "Person",
+      "definition": "A researcher at Google Research.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "Llion Jones",
+      "type": "Person",
+      "definition": "A researcher at Google Research.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "Aidan N. Gomez",
+      "type": "Person",
+      "definition": "A researcher at the University of Toronto.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "\u0141ukasz Kaiser",
+      "type": "Person",
+      "definition": "A researcher at Google Brain.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "Illia Polosukhin",
+      "type": "Person",
+      "definition": "A researcher at Google Research.",
+      "purpose": "Developing the Transformer model."
+    },
+    {
+      "name": "Self-attention",
+      "type": "mechanism",
+      "definition": "An attention mechanism relating different positions of a single sequence to compute a representation of the sequence.",
+      "purpose": "To learn dependencies between distant positions in a sequence.",
+      "complexity": "O(n2 \u00b7 d)",
+      "sequential_operations": "O(1)",
+      "maximum_path_length": "O(1)",
+      "function": "process sequences",
+      "advantage": "more interpretable",
+      "path length": "O(n/r)"
+    },
+    {
+      "name": "Encoder-decoder structure",
+      "type": "model architecture",
+      "definition": "A structure where the encoder maps an input sequence to a sequence of continuous representations, and the decoder generates an output sequence one element at a time.",
+      "purpose": "Neural sequence transduction models."
+    },
+    {
+      "name": "Transformer model architecture",
+      "type": "model architecture",
+      "definition": "Utilizes stacked self-attention and point-wise fully connected layers for both its encoder and decoder.",
+      "components": [
+        "encoder",
+        "decoder"
+      ]
+    },
+    {
+      "name": "encoder",
+      "type": "model component",
+      "definition": "Comprises six identical layers, each featuring a multi-head self-attention mechanism and a position-wise feed-forward network, with residual connections and layer normalization.",
+      "layers": 6,
+      "components": [
+        "multi-head self-attention",
+        "position-wise feed-forward network",
+        "residual connections",
+        "layer normalization"
+      ]
+    },
+    {
+      "name": "decoder",
+      "type": "model component",
+      "definition": "Mirrors the encoder structure but includes an additional sub-layer for multi-head attention over the encoder's output and masked self-attention to prevent attending to subsequent positions.",
+      "layers": 6,
+      "components": [
+        "multi-head self-attention",
+        "position-wise feed-forward network",
+        "residual connections",
+        "layer normalization",
+        "masked self-attention"
+      ]
+    },
+    {
+      "name": "multi-head self-attention",
+      "type": "attention mechanism",
+      "definition": "Computes attention scores for multiple heads and combines them to produce a final attention output.",
+      "heads": "multiple"
+    },
+    {
+      "name": "position-wise feed-forward network",
+      "type": "feed-forward network",
+      "definition": "Applies a feed-forward transformation to each position separately.",
+      "position-wise": true
+    },
+    {
+      "name": "residual connections",
+      "type": "connection type",
+      "definition": "Adds the input of a layer to its output to help with gradient flow and mitigate the vanishing gradient problem.",
+      "residual": true
+    },
+    {
+      "name": "layer normalization",
+      "type": "normalization technique",
+      "definition": "Normalizes the activations of a layer to have zero mean and unit variance.",
+      "layer-wise": true
+    },
+    {
+      "name": "masked self-attention",
+      "type": "attention mechanism",
+      "definition": "Prevents positions from attending to subsequent positions to ensure predictions for position i depend only on known outputs at positions less than i.",
+      "masked": true
+    },
+    {
+      "name": "Scaled Dot-Product Attention",
+      "type": "attention mechanism",
+      "definition": "Computes the dot products of the query with all keys, divides each by \u221adk, and applies a softmax function to obtain the weights on the values.",
+      "purpose": "To compute the compatibility between queries and keys in the Transformer model."
+    },
+    {
+      "name": "Multi-Head Attention",
+      "type": "attention mechanism",
+      "definition": "Allows the model to attend to different representation subspaces at different positions.",
+      "purpose": "To jointly attend to information from different representation subspaces at different positions."
+    },
+    {
+      "name": "dot product",
+      "type": "mathematical operation",
+      "definition": "The sum of the products of corresponding components of two vectors.",
+      "purpose": "To compute the similarity between two vectors."
+    },
+    {
+      "name": "softmax function",
+      "type": "mathematical function",
+      "definition": "Converts the decoder output to predicted next-token probabilities.",
+      "purpose": "To generate probabilities for the next token in the sequence."
+    },
+    {
+      "name": "feed-forward network",
+      "type": "neural network architecture",
+      "definition": "A neural network architecture that consists of a single hidden layer.",
+      "purpose": "To learn complex relationships between input and output variables."
+    },
+    {
+      "name": "matrix multiplication",
+      "type": "mathematical operation",
+      "definition": "The operation of multiplying two matrices together.",
+      "purpose": "To perform linear transformations on vectors and matrices."
+    },
+    {
+      "name": "Encoder-decoder attention",
+      "type": "Attention type",
+      "definition": "Queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder.",
+      "purpose": "Allows every position in the decoder to attend over all positions in the input sequence."
+    },
+    {
+      "name": "Self-attention in the encoder",
+      "type": "Attention type",
+      "definition": "All of the keys, values and queries come from the same place, in this case, the output of the previous layer in the encoder.",
+      "purpose": "Allows each position in the encoder to attend to all positions in the previous layer of the encoder."
+    },
+    {
+      "name": "Self-attention in the decoder",
+      "type": "Attention type",
+      "definition": "Allows each position in the decoder to attend to all positions in the decoder up to and including that position.",
+      "purpose": "To preserve the auto-regressive property by preventing leftward information flow."
+    },
+    {
+      "name": "Position-wise Feed-Forward Networks",
+      "type": "Network type",
+      "definition": "Applied to each position separately and identically, consists of two linear transformations with a ReLU activation in between.",
+      "purpose": "To provide additional processing to each position in the encoder and decoder layers."
+    },
+    {
+      "name": "Embeddings",
+      "type": "Technique",
+      "definition": "Learned embeddings to convert the input tokens and output tokens to vectors of dimension dmodel.",
+      "purpose": "To convert tokens to vectors for processing by the model."
+    },
+    {
+      "name": "Recurrent",
+      "type": "Layer Type",
+      "complexity": "O(n \u00b7 d2)",
+      "sequential_operations": "O(n)",
+      "maximum_path_length": "O(n)"
+    },
+    {
+      "name": "Convolutional",
+      "type": "Layer Type",
+      "complexity": "O(k \u00b7 n \u00b7 d2)",
+      "sequential_operations": "O(1)",
+      "maximum_path_length": "O(logk(n))"
+    },
+    {
+      "name": "Self-Attention (restricted)",
+      "type": "Layer Type",
+      "complexity": "O(r \u00b7 n \u00b7 d)",
+      "sequential_operations": "O(1)",
+      "maximum_path_length": "O(n/r)"
+    },
+    {
+      "name": "Positional Encoding",
+      "type": "Technique",
+      "purpose": "Incorporate sequence order information",
+      "dimension": "dmodel",
+      "function": "sin(pos/100002i/dmodel) and cos(pos/100002i/dmodel)",
+      "sinusoidal": "replaced with learned embeddings",
+      "learned embeddings": "similar results"
+    },
+    {
+      "name": "Training regimen",
+      "type": "process",
+      "components": [
+        "data batching",
+        "hardware optimization",
+        "learning rate schedule"
+      ],
+      "goal": "high performance on machine translation tasks"
+    },
+    {
+      "name": "Convolutional layer",
+      "type": "layer",
+      "kernel width": "k",
+      "connection": "input and output positions",
+      "complexity": "O(n/k) or O(logk(n))"
+    },
+    {
+      "name": "Recurrent layer",
+      "type": "layer",
+      "complexity": "O(k \u00b7 n \u00b7 d + n \u00b7 d2)"
+    },
+    {
+      "name": "Separable convolution",
+      "type": "layer",
+      "complexity": "O(k \u00b7 n \u00b7 d + n \u00b7 d2)"
+    },
+    {
+      "name": "Attention distribution",
+      "type": "data",
+      "function": "inspect model behavior",
+      "relation": "syntactic and semantic structure of sentences"
+    },
+    {
+      "name": "WMT 2014 English-German dataset",
+      "type": "dataset",
+      "size": "4.5 million sentence pairs",
+      "encoding": "byte-pair encoding",
+      "vocabulary": "37000 tokens"
+    },
+    {
+      "name": "WMT 2014 English-French dataset",
+      "type": "dataset",
+      "size": "36 million sentences",
+      "encoding": "word-piece vocabulary",
+      "vocabulary": "32000 tokens"
+    },
+    {
+      "name": "Training batch",
+      "type": "data",
+      "size": "25000 source tokens and 25000 target tokens"
+    },
+    {
+      "name": "NVIDIA P100 GPUs",
+      "type": "hardware",
+      "quantity": "8",
+      "usage": "training models"
+    },
+    {
+      "name": "Adam optimizer",
+      "type": "optimizer",
+      "parameters": [
+        "\u03b21 = 0.9",
+        "\u03b22 = 0.98",
+        "\u03f5 = 10\u22129"
+      ],
+      "learning rate": "varied over training"
+    },
+    {
+      "name": "Regularization",
+      "type": "process",
+      "types": [
+        "label smoothing",
+        "dropout",
+        "weight decay"
+      ]
+    },
+    {
+      "name": "ByteNet",
+      "type": "Machine Translation Model",
+      "definition": "A neural network architecture for machine translation.",
+      "BLEU_score": 23.75
+    },
+    {
+      "name": "Deep-Att + PosUnk",
+      "type": "Machine Translation Model",
+      "definition": "A neural network architecture for machine translation.",
+      "BLEU_score": 39.2,
+      "training_cost": "1.0 \u00b7 1020 FLOPs"
+    },
+    {
+      "name": "GNMT + RL",
+      "type": "Machine Translation Model",
+      "definition": "A neural network architecture for machine translation.",
+      "BLEU_score": {
+        "EN-DE": 24.6,
+        "EN-FR": 39.92
+      },
+      "training_cost": {
+        "EN-DE": "2.3 \u00b7 1019 FLOPs",
+        "EN-FR": "1.4 \u00b7 1020 FLOPs"
+      }
+    },
+    {
+      "name": "ConvS2S",
+      "type": "Machine Translation Model",
+      "definition": "A neural network architecture for machine translation.",
+      "BLEU_score": {
+        "EN-DE": 25.16,
+        "EN-FR": 40.46
+      },
+      "training_cost": {
+        "EN-DE": "9.6 \u00b7 1018 FLOPs",
+        "EN-FR": "1.5 \u00b7 1020 FLOPs"
+      }
+    },
+    {
+      "name": "MoE",
+      "type": "Machine Translation Model",
+      "definition": "A neural network architecture for machine translation.",
+      "BLEU_score": {
+        "EN-DE": 26.03,
+        "EN-FR": 40.56
+      },
+      "training_cost": {
+        "EN-DE": "2.0 \u00b7 1019 FLOPs",
+        "EN-FR": "1.2 \u00b7 1020 FLOPs"
+      }
+    },
+    {
+      "name": "Deep-Att + PosUnk Ensemble",
+      "type": "Machine Translation Model Ensemble",
+      "definition": "An ensemble of neural network architectures for machine translation.",
+      "BLEU_score": 40.4,
+      "training_cost": "8.0 \u00b7 1020 FLOPs"
+    },
+    {
+      "name": "GNMT + RL Ensemble",
+      "type": "Machine Translation Model Ensemble",
+      "definition": "An ensemble of neural network architectures for machine translation.",
+      "BLEU_score": {
+        "EN-DE": 26.3,
+        "EN-FR": 41.16
+      },
+      "training_cost": {
+        "EN-DE": "1.8 \u00b7 1020 FLOPs",
+        "EN-FR": "1.1 \u00b7 1021 FLOPs"
+      }
+    },
+    {
+      "name": "ConvS2S Ensemble",
+      "type": "Machine Translation Model Ensemble",
+      "definition": "An ensemble of neural network architectures for machine translation.",
+      "BLEU_score": {
+        "EN-DE": 26.36,
+        "EN-FR": 41.29
+      },
+      "training_cost": {
+        "EN-DE": "7.7 \u00b7 1019 FLOPs",
+        "EN-FR": "1.2 \u00b7 1021 FLOPs"
+      }
+    },
+    {
+      "name": "Transformer (base model)",
+      "type": "Machine Translation Model",
+      "definition": "A neural network architecture for machine translation.",
+      "BLEU_score": {
+        "EN-DE": 27.3,
+        "EN-FR": 38.1
+      },
+      "training_cost": "3.3 \u00b7 1018 FLOPs"
+    },
+    {
+      "name": "Transformer (big)",
+      "type": "Machine Translation Model",
+      "definition": "A neural network architecture for machine translation.",
+      "BLEU_score": {
+        "EN-DE": 28.4,
+        "EN-FR": 41.8
+      },
+      "training_cost": "2.3 \u00b7 1019 FLOPs"
+    },
+    {
+      "name": "Transformer architecture",
+      "type": "model",
+      "variations": [
+        {
+          "attention heads": "single-head",
+          "performance": "worse"
+        },
+        {
+          "attention heads": "multi-head",
+          "performance": "optimal number exists"
+        },
+        {
+          "model size": "bigger",
+          "performance": "better"
+        },
+        {
+          "dropout": "crucial",
+          "performance": "prevent overfitting"
+        },
+        {
+          "positional encoding": "learned embeddings",
+          "performance": "similar results"
+        }
+      ]
+    },
+    {
+      "name": "Attention heads",
+      "type": "component",
+      "single-head": "performs worse",
+      "multi-head": "optimal number exists",
+      "function": "attend to distant dependencies",
+      "example": "verb 'making...more difficult'",
+      "location": "Layer 5",
+      "tasks": [
+        "Anaphora resolution",
+        "Identifying key dependencies"
+      ]
+    },
+    {
+      "name": "Model size",
+      "type": "component",
+      "bigger": "performs better"
+    },
+    {
+      "name": "Dropout",
+      "type": "component",
+      "crucial": "prevent overfitting",
+      "definition": "A technique used to prevent neural networks from overfitting by randomly dropping out some of the neurons during training.",
+      "purpose": "To improve the generalization performance of neural networks."
+    },
+    {
+      "name": "RNN-based parsers",
+      "type": "Machine Learning Model",
+      "task": "English constituency parsing",
+      "performance": "competitive",
+      "tuning": "task-specific tuning"
+    },
+    {
+      "name": "WSJ 23",
+      "type": "Dataset",
+      "description": "Section 23 of WSJ",
+      "use": "benchmarking English constituency parsing models"
+    },
+    {
+      "name": "Vinyals & Kaiser et al. (2014)",
+      "type": "Research Paper",
+      "title": "Neural Machine Translation with Attention",
+      "authors": "Oriol Vinyals, \u0141ukasz Kaiser",
+      "year": "2014",
+      "parser_performance": "88.3 F1 (WSJ only, discriminative), 92.1 F1 (semi-supervised)"
+    },
+    {
+      "name": "Petrov et al. (2006)",
+      "type": "Research Paper",
+      "title": "Learning Accurate Parsers from Treebanks",
+      "authors": "Slav Petrov, James Eisner, Trevor Darrell",
+      "year": "2006",
+      "parser_performance": "90.4 F1 (WSJ only, discriminative)"
+    },
+    {
+      "name": "Zhu et al. (2013)",
+      "type": "Research Paper",
+      "title": "A Fast and Accurate Parser for Unrestricted Dependency Grammars",
+      "authors": "Zhiwei Zhu, Trevor Darrell, James Eisner",
+      "year": "2013",
+      "parser_performance": "90.4 F1 (WSJ only, discriminative), 91.3 F1 (semi-supervised)"
+    },
+    {
+      "name": "Dyer et al. (2016)",
+      "type": "Research Paper",
+      "title": "Recurrent Neural Network Grammar",
+      "authors": "Clint Dyer, Adhiguna Kuncoro, Noah Smith",
+      "year": "2016",
+      "parser_performance": "91.7 F1 (WSJ only, discriminative), 93.3 F1 (generative)"
+    },
+    {
+      "name": "Huang & Harper (2009)",
+      "type": "Research Paper",
+      "title": "Self-Attention and the Transformer Model",
+      "authors": "Liang Huang, Michael Harper",
+      "year": "2009",
+      "parser_performance": "91.3 F1 (semi-supervised)"
+    },
+    {
+      "name": "McClosky et al. (2006)",
+      "type": "Research Paper",
+      "title": "Crossing the Rubicon: Advances in Neural Machine Translation",
+      "authors": "David McClosky, Matthew E. Peters, Noah Smith",
+      "year": "2006",
+      "parser_performance": "92.1 F1 (semi-supervised)"
+    },
+    {
+      "name": "Luong et al. (2015)",
+      "type": "Research Paper",
+      "title": "Multi-task Learning for Neural Machine Translation",
+      "authors": "Minh-Thang Luong, David Manning",
+      "year": "2015",
+      "parser_performance": "93.0 F1 (multi-task)"
+    },
+    {
+      "name": "Neural Machine Translation",
+      "type": "Concept",
+      "definition": "A subfield of machine translation that uses deep learning models to translate text from one language to another.",
+      "attention_mechanisms": "Used to focus on specific parts of the input sequence when generating the output.",
+      "self_training_methods": "Techniques for improving model performance by using its own predictions as additional training data.",
+      "benchmark_datasets": "Collections of data used to evaluate the performance of different models.",
+      "long_term_dependencies": "The ability to capture relationships between words that are far apart in the input sequence.",
+      "recurrent_neural_networks": "A type of neural network that is well-suited for processing sequential data.",
+      "purpose": "To improve the accuracy and fluency of machine translation systems."
+    },
+    {
+      "name": "Attention Mechanisms",
+      "type": "Technique",
+      "definition": "A mechanism used in neural networks to focus on specific parts of the input data when making predictions.",
+      "purpose": "To improve the performance of neural machine translation models by allowing them to focus on relevant parts of the input sentence."
+    },
+    {
+      "name": "Self-Training Methods",
+      "type": "Technique",
+      "definition": "Techniques for improving model performance by using its own predictions as additional training data in neural machine translation."
+    },
+    {
+      "name": "Benchmark Datasets",
+      "type": "Data",
+      "definition": "Collections of data used to evaluate the performance of different neural machine translation models."
+    },
+    {
+      "name": "Long-Term Dependencies",
+      "type": "Concept",
+      "definition": "The ability to capture relationships between words that are far apart in the input sequence in neural machine translation."
+    },
+    {
+      "name": "Natural Language Processing",
+      "type": "Field of Study",
+      "definition": "A subfield of artificial intelligence that deals with the interaction between computers and human language.",
+      "purpose": "To enable computers to understand, interpret, and generate human language."
+    },
+    {
+      "name": "Sequence-to-Sequence Learning",
+      "type": "Model Architecture",
+      "definition": "A type of neural network architecture that is used for tasks such as machine translation and text summarization.",
+      "purpose": "To enable neural networks to generate sequences of tokens based on input sequences."
+    },
+    {
+      "name": "Subword Units",
+      "type": "Model Component",
+      "definition": "Units of text that are smaller than words, such as characters or character n-grams.",
+      "purpose": "To improve the performance of neural machine translation models by allowing them to represent rare words more effectively."
+    },
+    {
+      "name": "Penn Treebank",
+      "type": "Dataset",
+      "definition": "A large annotated corpus of English text.",
+      "purpose": "To provide a resource for training and evaluating natural language processing models."
+    },
+    {
+      "name": "Self-Training",
+      "type": "Training Technique",
+      "definition": "A technique used to improve the performance of machine learning models by training them on their own predictions.",
+      "purpose": "To enable models to learn from their mistakes and improve their performance over time."
+    },
+    {
+      "name": "Decomposable Attention Model",
+      "type": "Model Architecture",
+      "definition": "A type of attention mechanism that can be decomposed into smaller components.",
+      "purpose": "To improve the interpretability and efficiency of attention mechanisms."
+    },
+    {
+      "name": "Deep Reinforced Model",
+      "type": "Model Architecture",
+      "definition": "A type of neural network that uses reinforcement learning to optimize its parameters.",
+      "purpose": "To enable neural networks to learn complex tasks through trial and error."
+    },
+    {
+      "name": "Tree Annotation",
+      "type": "Task",
+      "definition": "The task of labeling the syntactic structure of a sentence.",
+      "purpose": "To enable computers to understand the grammatical structure of human language."
+    },
+    {
+      "name": "Output Embedding",
+      "type": "Model Component",
+      "definition": "A vector representation of the output of a neural network.",
+      "purpose": "To improve the performance of language models by allowing them to represent the output of the network more effectively."
+    },
+    {
+      "name": "Sparsely-Gated Mixture-of-Experts Layer",
+      "type": "Model Component",
+      "definition": "A type of neural network layer that uses a mixture of experts to represent the input data.",
+      "purpose": "To enable neural networks to represent complex data distributions more effectively."
+    },
+    {
+      "name": "End-to-End Memory Networks",
+      "type": "Model Architecture",
+      "definition": "A type of neural network that uses an external memory to store and retrieve information.",
+      "purpose": "To enable neural networks to learn complex tasks that require the storage and retrieval of information."
+    },
+    {
+      "name": "Google's Neural Machine Translation System",
+      "type": "System",
+      "definition": "A neural machine translation system developed by Google.",
+      "purpose": "To provide a high-quality machine translation service."
+    },
+    {
+      "name": "Fast-Forward Connections",
+      "type": "Model Component",
+      "definition": "Connections in a neural network that skip one or more layers.",
+      "purpose": "To improve the performance of deep recurrent models by allowing information to flow more quickly through the network."
+    },
+    {
+      "name": "Shift-Reduce Constituent Parsing",
+      "type": "Algorithm",
+      "definition": "An algorithm for parsing sentences into their constituent parts.",
+      "purpose": "To enable computers to understand the grammatical structure of human language."
+    },
+    {
+      "name": "neural network model",
+      "type": "AI model",
+      "capability": "understand complex sentence structures",
+      "method": "attending to relevant words across the sentence",
+      "layer": 5,
+      "function": "Focus on various aspects of sentence structure"
+    },
+    {
+      "name": "verb 'making'",
+      "type": "word",
+      "role": "subject of attention",
+      "modifiers": "distant"
+    },
+    {
+      "name": "encoder self-attention",
+      "type": "neural network layer",
+      "layer": "layer 5 of 6",
+      "function": "attention mechanism"
+    },
+    {
+      "name": "attention head 5",
+      "type": "attention head",
+      "layer": "layer 5 of 6",
+      "role": "anaphora resolution",
+      "behavior": "focusing on resolving anaphors"
+    },
+    {
+      "name": "attention head 6",
+      "type": "attention head",
+      "layer": "layer 5 of 6",
+      "role": "anaphora resolution",
+      "behavior": "focusing on resolving anaphors"
+    },
+    {
+      "name": "anaphora",
+      "type": "linguistic term",
+      "definition": "a word or phrase that refers back to an earlier word or phrase"
+    },
+    {
+      "name": "layer 5",
+      "type": "transformer layer",
+      "position": "5 of 6",
+      "function": "processing input sequences"
+    },
+    {
+      "name": "word 'its'",
+      "type": "word",
+      "role": "anaphora",
+      "attention": "sharp focus from attention heads 5 and 6"
+    },
+    {
+      "name": "Sentence Structure",
+      "type": "Data",
+      "aspects": [
+        "Anaphora resolution",
+        "Key dependencies"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "source": "Training regimen",
+      "label": "USES",
+      "target": "Adam optimizer"
+    },
+    {
+      "source": "MoE",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Transformer model",
+      "label": "OUTPERFORMS",
+      "target": "RNN-based parsers"
+    },
+    {
+      "source": "Transformer model",
+      "label": "APPLIED_TO",
+      "target": "WMT 2014 English-to-German translation task"
+    },
+    {
+      "source": "GNMT + RL",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Vinyals & Kaiser et al. (2014)"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "COMPARED_TO",
+      "target": "MoE"
+    },
+    {
+      "source": "Encoder-decoder attention",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Petrov et al. (2006)"
+    },
+    {
+      "source": "Transformer model",
+      "label": "APPLIED_TO",
+      "target": "WMT 2014 English-to-French translation task"
+    },
+    {
+      "source": "encoder",
+      "label": "COMPONENT",
+      "target": "position-wise feed-forward network"
+    },
+    {
+      "source": "Deep-Att + PosUnk Ensemble",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "encoder",
+      "label": "USES",
+      "target": "layer normalization"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Output Embedding",
+      "label": "TECHNIQUE_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "GNMT + RL Ensemble",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "layer 5",
+      "label": "CONTAINS",
+      "target": "attention head 6"
+    },
+    {
+      "source": "ConvS2S",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL Ensemble"
+    },
+    {
+      "source": "Niki Parmar",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Deep-Att + PosUnk Ensemble",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Fast-Forward Connections",
+      "label": "TECHNIQUE_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "Deep-Att + PosUnk Ensemble"
+    },
+    {
+      "source": "Sequence-to-Sequence Learning",
+      "label": "USED_IN",
+      "target": "Neural Machine Translation"
+    },
+    {
+      "source": "Transformer model architecture",
+      "label": "COMPONENT",
+      "target": "decoder"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL Ensemble"
+    },
+    {
+      "source": "Self-Attention (restricted)",
+      "label": "USES",
+      "target": "Positional Encoding"
+    },
+    {
+      "source": "\u0141ukasz Kaiser",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Neural Machine Translation",
+      "label": "USES",
+      "target": "Self-Training Methods"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "ByteNet"
+    },
+    {
+      "source": "Training regimen",
+      "label": "USES",
+      "target": "Regularization"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Dyer et al. (2016)"
+    },
+    {
+      "source": "Embeddings",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Transformer model",
+      "label": "REPLACES",
+      "target": "Recurrent neural networks"
+    },
+    {
+      "source": "MoE",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL Ensemble"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Huang & Harper (2009)"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "Attention heads",
+      "label": "FOCUSES_ON",
+      "target": "Sentence Structure"
+    },
+    {
+      "source": "Llion Jones",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Neural Machine Translation",
+      "label": "CAPTURES",
+      "target": "Long-Term Dependencies"
+    },
+    {
+      "source": "attention head 6",
+      "label": "RESOLVES",
+      "target": "anaphora"
+    },
+    {
+      "source": "Transformer architecture",
+      "label": "COMPONENT_OF",
+      "target": "Positional Encoding"
+    },
+    {
+      "source": "Position-wise Feed-Forward Networks",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Convolutional",
+      "label": "USES",
+      "target": "Positional Encoding"
+    },
+    {
+      "source": "decoder",
+      "label": "COMPONENT",
+      "target": "multi-head self-attention"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Transformer model",
+      "label": "EVALUATED_BY",
+      "target": "BLEU score"
+    },
+    {
+      "source": "Transformer model",
+      "label": "IS_A",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Ashish Vaswani",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Self-attention in the encoder",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Attention mechanism",
+      "label": "COMPONENT_OF",
+      "target": "neural network model"
+    },
+    {
+      "source": "ConvS2S Ensemble",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Deep-Att + PosUnk Ensemble"
+    },
+    {
+      "source": "ConvS2S",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL"
+    },
+    {
+      "source": "Neural Machine Translation",
+      "label": "USES",
+      "target": "Attention Mechanisms"
+    },
+    {
+      "source": "encoder",
+      "label": "USES",
+      "target": "residual connections"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "MoE"
+    },
+    {
+      "source": "GNMT + RL",
+      "label": "COMPARED_TO",
+      "target": "MoE"
+    },
+    {
+      "source": "Scaled Dot-Product Attention",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "Deep-Att + PosUnk"
+    },
+    {
+      "source": "Sparsely-Gated Mixture-of-Experts Layer",
+      "label": "TECHNIQUE_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "attention head 5",
+      "label": "RESOLVES",
+      "target": "anaphora"
+    },
+    {
+      "source": "Deep-Att + PosUnk Ensemble",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL Ensemble"
+    },
+    {
+      "source": "Deep Reinforced Model",
+      "label": "TECHNIQUE_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "Transformer architecture",
+      "label": "COMPONENT_OF",
+      "target": "Attention heads"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S"
+    },
+    {
+      "source": "ConvS2S",
+      "label": "IS_A",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "encoder self-attention",
+      "label": "IMPLEMENTS",
+      "target": "Attention mechanism"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "Google's Neural Machine Translation System",
+      "label": "EXAMPLE_OF",
+      "target": "Neural Machine Translation"
+    },
+    {
+      "source": "Transformer model",
+      "label": "APPLIED_TO",
+      "target": "English constituency parsing"
+    },
+    {
+      "source": "Self-attention",
+      "label": "ALTERNATIVE_TO",
+      "target": "Convolutional layer"
+    },
+    {
+      "source": "GNMT + RL",
+      "label": "COMPARED_TO",
+      "target": "Deep-Att + PosUnk Ensemble"
+    },
+    {
+      "source": "MoE",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "Training regimen",
+      "label": "USES",
+      "target": "WMT 2014 English-German dataset"
+    },
+    {
+      "source": "Neural Machine Translation",
+      "label": "EVALUATED_ON",
+      "target": "Benchmark Datasets"
+    },
+    {
+      "source": "Training regimen",
+      "label": "USES",
+      "target": "WMT 2014 English-French dataset"
+    },
+    {
+      "source": "decoder",
+      "label": "COMPONENT",
+      "target": "position-wise feed-forward network"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Luong et al. (2015)"
+    },
+    {
+      "source": "neural network model",
+      "label": "CONTAINS",
+      "target": "Attention heads"
+    },
+    {
+      "source": "decoder",
+      "label": "USES",
+      "target": "layer normalization"
+    },
+    {
+      "source": "Illia Polosukhin",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "GNMT + RL",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "matrix multiplication",
+      "label": "USED_IN",
+      "target": "Multi-Head Attention"
+    },
+    {
+      "source": "softmax function",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "MoE"
+    },
+    {
+      "source": "word 'its'",
+      "label": "IS_AN_EXAMPLE_OF",
+      "target": "anaphora"
+    },
+    {
+      "source": "Self-attention",
+      "label": "USES",
+      "target": "Positional Encoding"
+    },
+    {
+      "source": "dot product",
+      "label": "USED_IN",
+      "target": "Scaled Dot-Product Attention"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Deep-Att + PosUnk"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL Ensemble"
+    },
+    {
+      "source": "Decomposable Attention Model",
+      "label": "TYPE_OF",
+      "target": "Attention Mechanisms"
+    },
+    {
+      "source": "GNMT + RL",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Recurrent",
+      "label": "USES",
+      "target": "Positional Encoding"
+    },
+    {
+      "source": "Self-attention",
+      "label": "COMPLEXITY_EQUIVALENT",
+      "target": "Separable convolution"
+    },
+    {
+      "source": "Self-Training",
+      "label": "TECHNIQUE_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "End-to-End Memory Networks",
+      "label": "TECHNIQUE_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "Subword Units",
+      "label": "USED_IN",
+      "target": "Neural Machine Translation"
+    },
+    {
+      "source": "Aidan N. Gomez",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL"
+    },
+    {
+      "source": "Deep-Att + PosUnk Ensemble",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "Transformer architecture",
+      "label": "COMPONENT_OF",
+      "target": "Dropout"
+    },
+    {
+      "source": "Transformer model architecture",
+      "label": "COMPONENT",
+      "target": "encoder"
+    },
+    {
+      "source": "Training regimen",
+      "label": "USES",
+      "target": "NVIDIA P100 GPUs"
+    },
+    {
+      "source": "GNMT + RL",
+      "label": "IS_A",
+      "target": "GNMT + RL Ensemble"
+    },
+    {
+      "source": "Penn Treebank",
+      "label": "RESOURCE_FOR",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "Transformer architecture",
+      "label": "APPLIED_TO",
+      "target": "English constituency parsing"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "Attention Mechanisms",
+      "label": "USED_IN",
+      "target": "Neural Machine Translation"
+    },
+    {
+      "source": "Transformer model",
+      "label": "REPLACES",
+      "target": "Convolutional neural networks"
+    },
+    {
+      "source": "Transformer model",
+      "label": "TRAINED_BY",
+      "target": "Training regimen"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL Ensemble"
+    },
+    {
+      "source": "Deep-Att + PosUnk",
+      "label": "IS_A",
+      "target": "Deep-Att + PosUnk Ensemble"
+    },
+    {
+      "source": "Transformer model",
+      "label": "BASED_ON",
+      "target": "Encoder-decoder structure"
+    },
+    {
+      "source": "Dropout",
+      "label": "TECHNIQUE_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "decoder",
+      "label": "USES",
+      "target": "residual connections"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S"
+    },
+    {
+      "source": "Attention heads",
+      "label": "PART_OF",
+      "target": "encoder self-attention"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "Zhu et al. (2013)"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "Transformer model",
+      "label": "USES",
+      "target": "Multi-Head Attention"
+    },
+    {
+      "source": "GNMT + RL",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "Tree Annotation",
+      "label": "TASK_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "Self-attention",
+      "label": "USED_IN",
+      "target": "Encoder-decoder structure"
+    },
+    {
+      "source": "Transformer model",
+      "label": "IS_A",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "ConvS2S",
+      "label": "COMPARED_TO",
+      "target": "Deep-Att + PosUnk Ensemble"
+    },
+    {
+      "source": "Multi-Head Attention",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "matrix multiplication",
+      "label": "USED_IN",
+      "target": "Scaled Dot-Product Attention"
+    },
+    {
+      "source": "Neural Machine Translation",
+      "label": "SUBFIELD_OF",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "ConvS2S Ensemble",
+      "label": "COMPARED_TO",
+      "target": "Transformer (base model)"
+    },
+    {
+      "source": "softmax function",
+      "label": "USED_IN",
+      "target": "Scaled Dot-Product Attention"
+    },
+    {
+      "source": "Transformer model",
+      "label": "BENCHMARKED_ON",
+      "target": "WSJ 23"
+    },
+    {
+      "source": "layer 5",
+      "label": "CONTAINS",
+      "target": "attention head 5"
+    },
+    {
+      "source": "Self-attention in the decoder",
+      "label": "USED_IN",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Training regimen",
+      "label": "USES",
+      "target": "Training batch"
+    },
+    {
+      "source": "GNMT + RL Ensemble",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "Shift-Reduce Constituent Parsing",
+      "label": "ALGORITHM_USED_IN",
+      "target": "Natural Language Processing"
+    },
+    {
+      "source": "Recurrent neural networks",
+      "label": "USES",
+      "target": "Encoder-decoder structure"
+    },
+    {
+      "source": "Self-attention",
+      "label": "ALTERNATIVE_TO",
+      "target": "Recurrent layer"
+    },
+    {
+      "source": "Neural Machine Translation",
+      "label": "USES",
+      "target": "Recurrent neural networks"
+    },
+    {
+      "source": "ConvS2S",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "MoE",
+      "label": "COMPARED_TO",
+      "target": "Deep-Att + PosUnk Ensemble"
+    },
+    {
+      "source": "decoder",
+      "label": "COMPONENT",
+      "target": "masked self-attention"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S"
+    },
+    {
+      "source": "Noam Shazeer",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "Transformer model",
+      "label": "USES",
+      "target": "Attention mechanism"
+    },
+    {
+      "source": "GNMT + RL Ensemble",
+      "label": "COMPARED_TO",
+      "target": "Transformer (big)"
+    },
+    {
+      "source": "Jakob Uszkoreit",
+      "label": "DEVELOPED",
+      "target": "Transformer model"
+    },
+    {
+      "source": "encoder",
+      "label": "COMPONENT",
+      "target": "multi-head self-attention"
+    },
+    {
+      "source": "Transformer model",
+      "label": "COMPARED_TO",
+      "target": "McClosky et al. (2006)"
+    },
+    {
+      "source": "verb 'making'",
+      "label": "SUBJECT_OF",
+      "target": "Attention mechanism"
+    },
+    {
+      "source": "Transformer architecture",
+      "label": "COMPONENT_OF",
+      "target": "Model size"
+    },
+    {
+      "source": "ByteNet",
+      "label": "COMPARED_TO",
+      "target": "GNMT + RL"
+    },
+    {
+      "source": "MoE",
+      "label": "COMPARED_TO",
+      "target": "ConvS2S Ensemble"
+    },
+    {
+      "source": "Transformer model",
+      "label": "USES",
+      "target": "Self-attention"
+    },
+    {
+      "source": "ConvS2S",
+      "label": "COMPARED_TO",
+      "target": "MoE"
+    },
+    {
+      "source": "Self-attention",
+      "label": "PRODUCES",
+      "target": "Attention distribution"
+    }
+  ]
+}
